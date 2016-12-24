@@ -1,5 +1,6 @@
 package domainapp.dom.academicyear;
 
+import com.google.common.base.Strings;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.query.QueryDefault;
@@ -19,6 +20,8 @@ import java.util.Map;
         repositoryFor = AcademicYear.class)
 public class AcademicYearRepository {
 
+    private static final int START_YEAR_MAX_NUM_DIGITS = 4;
+
     @javax.inject.Inject
     RepositoryService repositoryService;
     @javax.inject.Inject
@@ -37,10 +40,7 @@ public class AcademicYearRepository {
     }
 
     public List<AcademicYear> findByStartYearDigitSequence(final String startYearDigitSequence) {
-        StringBuilder startYearBuilder = new StringBuilder();
-        startYearBuilder.append(startYearDigitSequence);
-        startYearBuilder.append("0000");
-        String paddedYear = startYearBuilder.substring(0, 4);
+        String paddedYear = Strings.padEnd(startYearDigitSequence, START_YEAR_MAX_NUM_DIGITS, '0');
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put(AcademicYear.START_YEAR, Integer.parseInt(paddedYear));
