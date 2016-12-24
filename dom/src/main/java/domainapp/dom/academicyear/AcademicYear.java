@@ -41,10 +41,6 @@ public class AcademicYear implements Comparable<AcademicYear> {
 
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
     private Integer startYear;
-    //region startYear
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
-    @Persistent(mappedBy = Exam.ACADEMIC_YEAR_ID)
-    private java.util.Collection<Exam> exams;
 
     @Property(
             editing = Editing.ENABLED,
@@ -52,11 +48,16 @@ public class AcademicYear implements Comparable<AcademicYear> {
     public Integer getStartYear() {
         return startYear;
     }
-    //endregion
 
     public void setStartYear(Integer startYear) {
         this.startYear = startYear;
     }
+    //endregion
+
+    //region exams
+    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Persistent(mappedBy = Exam.ACADEMIC_YEAR_ID)
+    private java.util.Collection<Exam> exams;
 
     @Property(
             editing = Editing.ENABLED,

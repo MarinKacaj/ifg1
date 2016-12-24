@@ -27,13 +27,9 @@ public class Exam implements Comparable<Exam> {
 
     //region academicYear
     public static final String ACADEMIC_YEAR_ID = "academicYear";
+
     @javax.inject.Inject
     private AcademicYearRepository academicYearRepository;
-    //region mark
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
-    private Integer mark;
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE, target = "id", name = ACADEMIC_YEAR_ID)
-    private AcademicYear academicYear;
 
     @Property(
             editing = Editing.ENABLED,
@@ -42,7 +38,6 @@ public class Exam implements Comparable<Exam> {
     public AcademicYear getAcademicYear() {
         return academicYear;
     }
-    //endregion
 
     public void setAcademicYear(AcademicYear academicYear) {
         this.academicYear = academicYear;
@@ -52,6 +47,13 @@ public class Exam implements Comparable<Exam> {
     public List<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
+    //endregion
+
+    //region mark
+    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    private Integer mark;
+    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE, target = "id", name = ACADEMIC_YEAR_ID)
+    private AcademicYear academicYear;
 
     @Property(
             editing = Editing.ENABLED,
@@ -64,6 +66,7 @@ public class Exam implements Comparable<Exam> {
     public void setMark(Integer mark) {
         this.mark = mark;
     }
+    //endregion
 
     @Override
     public int compareTo(Exam other) {
