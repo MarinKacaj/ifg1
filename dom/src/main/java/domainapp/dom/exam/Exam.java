@@ -34,7 +34,24 @@ public class Exam implements Comparable<Exam> {
     private Integer mark;
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE, target = "id", name = ACADEMIC_YEAR_ID)
     private AcademicYear academicYear;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    @PropertyLayout(named = "Academic Year")
+    public AcademicYear getAcademicYear() {
+        return academicYear;
+    }
     //endregion
+
+    public void setAcademicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    @ActionLayout(hidden = Where.NOWHERE)
+    public List<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
+        return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
+    }
 
     @Property(
             editing = Editing.ENABLED,
@@ -47,24 +64,6 @@ public class Exam implements Comparable<Exam> {
     public void setMark(Integer mark) {
         this.mark = mark;
     }
-
-    @Property(
-            editing = Editing.ENABLED,
-            publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Academic Year")
-    public AcademicYear getAcademicYear() {
-        return academicYear;
-    }
-
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
-    }
-
-    @ActionLayout(hidden = Where.NOWHERE)
-    public List<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
-        return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
-    }
-    //endregion
 
     @Override
     public int compareTo(Exam other) {
