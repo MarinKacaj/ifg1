@@ -28,7 +28,7 @@ import java.util.Collection;
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
                 name = AcademicYear.FIND_BY_START_YEAR_QUERY,
-                value = "SELECT FROM domainapp.dom.academicyear.AcademicYear WHERE startYear > :" + AcademicYear.START_YEAR)
+                value = "SELECT FROM domainapp.dom.academicyear.AcademicYear WHERE startYear >= :" + AcademicYear.START_YEAR)
 })
 public class AcademicYear implements Comparable<AcademicYear> {
 
