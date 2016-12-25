@@ -36,10 +36,6 @@ public class Promotion implements Comparable<Promotion> {
         this.year = year;
     }
 
-    public boolean isOngoing() {
-        return year != null;
-    }
-
     @Override
     public int compareTo(@Nonnull Promotion other) {
         return (int) Math.signum(this.getYear() - other.getYear());
@@ -47,12 +43,6 @@ public class Promotion implements Comparable<Promotion> {
 
     @Override
     public String toString() {
-        String title;
-        if (year == null) {
-            title = "Ongoing";
-        } else {
-            title = year + " Promotion";
-        }
-        return title;
+        return year + " Promotion";
     }
 }
