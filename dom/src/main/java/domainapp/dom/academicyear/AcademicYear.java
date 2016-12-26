@@ -2,13 +2,15 @@ package domainapp.dom.academicyear;
 
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.exam.Exam;
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by C.R.C on 12/17/2016.
@@ -19,7 +21,7 @@ import java.util.Collection;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = AcademicYear.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
         auditing = Auditing.ENABLED,
@@ -32,6 +34,8 @@ import java.util.Collection;
 })
 public class AcademicYear implements Comparable<AcademicYear> {
 
+    public static final String ID = "id";
+
     //region named queries
     public static final String FIND_BY_START_YEAR_QUERY = "findByStartYear";
     //endregion
@@ -39,7 +43,7 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //region startYear
     public static final String START_YEAR = "startYear";
 
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
     private Integer startYear;
 
     @Property(
@@ -55,19 +59,36 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //endregion
 
     //region exams
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Exam.ACADEMIC_YEAR_ID)
-    private java.util.Collection<Exam> exams;
+    private List<Exam> exams;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public java.util.Collection<Exam> getExams() {
+    public List<Exam> getExams() {
         return exams;
     }
 
-    public void setExams(Collection<Exam> exams) {
+    public void setExams(List<Exam> exams) {
         this.exams = exams;
+    }
+    //endregion
+
+    //region students
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Persistent(mappedBy = Student.ACADEMIC_YEAR)
+    private List<Student> students;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
     //endregion
 

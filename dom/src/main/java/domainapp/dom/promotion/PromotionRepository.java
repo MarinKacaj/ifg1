@@ -32,6 +32,4 @@ public class PromotionRepository {
         repositoryService.persist(promotion);
         return promotion;
     }
-
-
 }

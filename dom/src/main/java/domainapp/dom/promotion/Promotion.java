@@ -1,11 +1,15 @@
 package domainapp.dom.promotion;
 
 import domainapp.dom.ColumnAllowsNull;
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
+import java.util.List;
 
 /**
  * Created by C.R.C on 12/24/2016.
@@ -16,12 +20,15 @@ import javax.jdo.annotations.IdentityType;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = Promotion.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED)
+        auditing = Auditing.ENABLED) // TODO - autocomplete
 public class Promotion implements Comparable<Promotion> {
 
+    public static final String ID = "id";
+
+    //region year
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.TRUE)
     private Integer year;
 
@@ -35,6 +42,21 @@ public class Promotion implements Comparable<Promotion> {
     public void setYear(Integer year) {
         this.year = year;
     }
+    //endregion
+
+    //region students
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Persistent(mappedBy = Student.PROMOTION)
+    private List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+    //endregion
 
     @Override
     public int compareTo(@Nonnull Promotion other) {
