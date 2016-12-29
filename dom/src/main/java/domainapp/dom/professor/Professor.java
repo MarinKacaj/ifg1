@@ -1,6 +1,5 @@
 package domainapp.dom.professor;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
 import org.apache.isis.applib.annotation.*;
@@ -148,10 +147,7 @@ public class Professor implements Comparable<Professor> {
     //region toString
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("fullName", fullName)
-                .add("affiliation", affiliation)
-                .toString();
+        return fullName + ", " + affiliation;
     }
     //endregion
 }
