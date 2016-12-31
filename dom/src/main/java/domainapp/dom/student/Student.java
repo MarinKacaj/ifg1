@@ -5,6 +5,7 @@ import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.letter.Letter;
 import domainapp.dom.promotion.Promotion;
+import domainapp.dom.promotion.PromotionRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.jdo.annotations.*;
@@ -256,6 +257,9 @@ public class Student {
     public static final String PROMOTION = "promotion";
     public static final String PROMOTION_LABEL = "Promotion Year/Status";
 
+    @javax.inject.Inject
+    PromotionRepository promotionRepository;
+
     @Column(
             name = PROMOTION,
             allowsNull = ColumnAllowsNull.FALSE,
@@ -272,6 +276,11 @@ public class Student {
 
     public void setPromotion(Promotion promotion) {
         this.promotion = promotion;
+    }
+
+    @Action
+    public java.util.Collection<Promotion> autoCompletePromotion(final String yearDigitSequence) {
+        return promotionRepository.findByYearDigitSequence(yearDigitSequence);
     }
     //endregion
 

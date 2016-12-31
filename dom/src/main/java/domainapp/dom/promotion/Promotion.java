@@ -5,9 +5,7 @@ import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.*;
 
 /**
  * Created by C.R.C on 12/24/2016.
@@ -21,13 +19,25 @@ import javax.jdo.annotations.Persistent;
         column = Promotion.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED) // TODO - autocomplete
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = PromotionRepository.class,
+        autoCompleteAction = "findByYearDigitSequence")
+@Queries({
+        @Query(
+                name = Promotion.FIND_BY_YEAR_QUERY,
+                value = "SELECT FROM domainapp.dom.promotion.Promotion WHERE " +
+                        Promotion.YEAR + " >= :" + Promotion.YEAR)
+})
 public class Promotion implements Comparable<Promotion> {
 
     public static final String ID = "id";
 
+    public static final String FIND_BY_YEAR_QUERY = "findByYear";
+
     //region year
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.TRUE)
+    public static final String YEAR = "year";
+
+    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.TRUE, name = YEAR)
     private Integer year;
 
     @Property(

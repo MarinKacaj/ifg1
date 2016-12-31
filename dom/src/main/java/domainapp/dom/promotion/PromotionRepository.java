@@ -1,5 +1,6 @@
 package domainapp.dom.promotion;
 
+import domainapp.dom.YearSequenceFilter;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
@@ -31,5 +32,11 @@ public class PromotionRepository {
         serviceRegistry.injectServicesInto(promotion);
         repositoryService.persist(promotion);
         return promotion;
+    }
+
+    public Collection<Promotion> findByYearDigitSequence(final String yearDigitSequence) {
+        return YearSequenceFilter.filterByYearDigitSequence(
+                repositoryService, Promotion.FIND_BY_YEAR_QUERY,
+                Promotion.class, Promotion.YEAR, yearDigitSequence);
     }
 }
