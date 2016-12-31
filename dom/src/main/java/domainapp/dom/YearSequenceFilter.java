@@ -29,6 +29,6 @@ public class YearSequenceFilter {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put(yearFieldName, paddedYear);
 
-        return repositoryService.allMatches(new QueryDefault<T>(domain, queryName, parameters));
+        return repositoryService.allMatches(new QueryDefault<>(domain, queryName, parameters));
     }
 }
