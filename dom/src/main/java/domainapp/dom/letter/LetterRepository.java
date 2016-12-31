@@ -1,5 +1,6 @@
 package domainapp.dom.letter;
 
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
@@ -25,9 +26,10 @@ public class LetterRepository {
         return repositoryService.allInstances(Letter.class);
     }
 
-    public Letter create(final String content) {
+    public Letter create(final String content, final Student student) {
         final Letter letter = new Letter();
         letter.setContent(content);
+        letter.setStudent(student);
         serviceRegistry.injectServicesInto(letter);
         repositoryService.persist(letter);
         return letter;

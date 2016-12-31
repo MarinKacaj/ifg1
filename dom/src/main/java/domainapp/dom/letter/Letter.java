@@ -3,11 +3,15 @@ package domainapp.dom.letter;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
+import domainapp.dom.student.Student;
+import domainapp.dom.student.StudentRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -27,7 +31,7 @@ public class Letter implements Comparable<Letter> {
     //region content
     public static final String CONTENT_LABEL = "Content";
 
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
     private String content;
 
     @Property(
@@ -43,6 +47,33 @@ public class Letter implements Comparable<Letter> {
     }
     //endregion
 
+    //region student
+    @javax.inject.Inject
+    StudentRepository studentRepository;
+
+    public static final String STUDENT_ID = "student";
+    public static final String STUDENT_LABEL = "Student";
+
+    @Column(allowsNull = ColumnAllowsNull.FALSE, target = Student.ID, name = STUDENT_ID)
+    private Student student;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Collection<Student> autoCompleteStudent(final String fullNameSequence) {
+        return studentRepository.findByNameSequence(fullNameSequence);
+    }
+    //endregion
+
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Letter other) {
         return ComparisonChain.start().compare(this.getContent(), other.getContent()).result();
@@ -54,4 +85,5 @@ public class Letter implements Comparable<Letter> {
                 .add("content", content)
                 .toString();
     }
+    //endregion
 }

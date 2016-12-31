@@ -1,5 +1,6 @@
 package domainapp.dom.letter;
 
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,9 @@ public class LetterMenu {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @MemberOrder(sequence = "2")
-    public Letter create(@ParameterLayout(named = Letter.CONTENT_LABEL) final String content) {
-        return letterRepository.create(content);
+    public Letter create(
+            @ParameterLayout(named = Letter.CONTENT_LABEL) final String content,
+            @ParameterLayout(named = Letter.STUDENT_LABEL) final Student student) {
+        return letterRepository.create(content, student);
     }
 }

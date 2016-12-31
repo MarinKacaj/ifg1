@@ -3,12 +3,11 @@ package domainapp.dom.student;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.letter.Letter;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.*;
 
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.*;
 
 /**
  * Created by C.R.C on 12/25/2016.
@@ -19,20 +18,37 @@ import javax.jdo.annotations.IdentityType;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = Student.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED)
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = StudentRepository.class,
+        autoCompleteAction = "findByNameSequence")
+@Queries({
+        @Query(
+                name = Student.FIND_BY_FULL_NAME_QUERY,
+                value = "SELECT FROM domainapp.dom.student.Student WHERE " +
+                        Student.FULL_NAME + ".indexOf(:" + Student.FULL_NAME + ") >= 0")
+})
 public class Student {
 
+    public static final String FIND_BY_FULL_NAME_QUERY = "findByFullName";
+
+    //region > id
+    public static final String ID = "id";
+    //endregion
+
     //region fullName
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
+    public static final String FULL_NAME = "fullName";
+    public static final String FULL_NAME_LABEL = "Full Name";
+
+    @Column(allowsNull = ColumnAllowsNull.FALSE, name = FULL_NAME)
     private String fullName;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Full Name")
+    @PropertyLayout(named = FULL_NAME_LABEL)
     public String getFullName() {
         return fullName;
     }
@@ -43,12 +59,15 @@ public class Student {
     //endregion
 
     //region gender
+    public static final String GENDER_LABEL = "Gender";
+
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     private Gender gender;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = GENDER_LABEL)
     public Gender getGender() {
         return gender;
     }
@@ -59,7 +78,9 @@ public class Student {
     //endregion
 
     //region birthYear
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
+    public static final String BIRTH_YEAR_LABEL = "Birth year";
+
+    @Column(allowsNull = ColumnAllowsNull.FALSE, name = BIRTH_YEAR_LABEL)
     private Integer birthYear;
 
     @Property(
@@ -76,6 +97,7 @@ public class Student {
 
     //region initialFormation
     public static final String INITIAL_FORMATION = "initialFormation";
+    public static final String INITIAL_FORMATION_LABEL = "Initial Formation";
 
     @Column(
             name = INITIAL_FORMATION,
@@ -86,7 +108,7 @@ public class Student {
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Initial Formation")
+    @PropertyLayout(named = INITIAL_FORMATION_LABEL)
     public InitialFormation getInitialFormation() {
         return initialFormation;
     }
@@ -97,12 +119,16 @@ public class Student {
     //endregion
 
     //region address
+    public static final String ADDRESS_LABEL = "Address";
+
+
     @Column(allowsNull = ColumnAllowsNull.TRUE)
     private String address;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = ADDRESS_LABEL)
     public String getAddress() {
         return address;
     }
@@ -113,12 +139,15 @@ public class Student {
     //endregion
 
     //region city
+    public static final String CITY_LABEL = "City";
+
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     private String city;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = CITY_LABEL)
     public String getCity() {
         return city;
     }
@@ -129,12 +158,15 @@ public class Student {
     //endregion
 
     //region country
+    public static final String COUNTRY_LABEL = "Country";
+
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     private String country;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = COUNTRY_LABEL)
     public String getCountry() {
         return country;
     }
@@ -145,12 +177,15 @@ public class Student {
     //endregion
 
     //region tel
+    public static final String TEL_LABEL = "Telephone number";
+
     @Column(allowsNull = ColumnAllowsNull.TRUE)
     private String tel;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = TEL_LABEL)
     public String getTel() {
         return tel;
     }
@@ -161,12 +196,15 @@ public class Student {
     //endregion
 
     //region email
+    public static final String EMAIL_LABEL = "Email";
+
     @Column(allowsNull = ColumnAllowsNull.TRUE)
     private String email;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
+    @PropertyLayout(named = EMAIL_LABEL)
     public String getEmail() {
         return email;
     }
@@ -177,13 +215,15 @@ public class Student {
     //endregion
 
     //region employer
+    public static final String EMPLOYER_LABEL = "Employer name";
+
     @Column(allowsNull = ColumnAllowsNull.TRUE)
     private String employer;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Employer Name")
+    @PropertyLayout(named = EMPLOYER_LABEL)
     public String getEmployer() {
         return employer;
     }
@@ -194,13 +234,15 @@ public class Student {
     //endregion
 
     //region employmentStatus
+    public static final String EMPLOYMENT_STATUS_LABEL = "Employment status";
+
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     private EmploymentStatus employmentStatus;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Employment Status")
+    @PropertyLayout(named = EMPLOYMENT_STATUS_LABEL)
     public EmploymentStatus getEmploymentStatus() {
         return employmentStatus;
     }
@@ -212,6 +254,7 @@ public class Student {
 
     //region promotion
     public static final String PROMOTION = "promotion";
+    public static final String PROMOTION_LABEL = "Promotion Year/Status";
 
     @Column(
             name = PROMOTION,
@@ -222,7 +265,7 @@ public class Student {
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Promotion Year/Status")
+    @PropertyLayout(named = PROMOTION_LABEL)
     public Promotion getPromotion() {
         return promotion;
     }
@@ -234,6 +277,7 @@ public class Student {
 
     //region year
     public static final String ACADEMIC_YEAR = "year";
+    public static final String ACADEMIC_YEAR_LABEL = "Year";
 
     @Column(
             name = ACADEMIC_YEAR,
@@ -244,13 +288,28 @@ public class Student {
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Year")
+    @PropertyLayout(named = ACADEMIC_YEAR_LABEL)
     public AcademicYear getYear() {
         return year;
     }
 
     public void setYear(AcademicYear year) {
         this.year = year;
+    }
+    //endregion
+
+    //region letters
+
+    @Persistent(mappedBy = Letter.STUDENT_ID)
+    @Collection
+    private java.util.Collection<Letter> letters;
+
+    public java.util.Collection<Letter> getLetters() {
+        return letters;
+    }
+
+    public void setLetters(java.util.Collection<Letter> letters) {
+        this.letters = letters;
     }
     //endregion
 }
