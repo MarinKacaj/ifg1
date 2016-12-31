@@ -58,13 +58,10 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //endregion
 
     //region exams
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Exam.ACADEMIC_YEAR_ID)
+    @Collection
     private java.util.Collection<Exam> exams;
 
-    @Property(
-            editing = Editing.ENABLED,
-            publishing = Publishing.ENABLED)
     public java.util.Collection<Exam> getExams() {
         return exams;
     }
@@ -75,13 +72,10 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //endregion
 
     //region students
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.ACADEMIC_YEAR)
+    @Collection
     private java.util.Collection<Student> students;
 
-    @Property(
-            editing = Editing.ENABLED,
-            publishing = Publishing.ENABLED)
     public java.util.Collection<Student> getStudents() {
         return students;
     }

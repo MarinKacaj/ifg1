@@ -5,7 +5,6 @@ import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
@@ -44,8 +43,8 @@ public class Promotion implements Comparable<Promotion> {
     //endregion
 
     //region students
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.PROMOTION)
+    @Collection
     private java.util.Collection<Student> students;
 
     public java.util.Collection<Student> getStudents() {

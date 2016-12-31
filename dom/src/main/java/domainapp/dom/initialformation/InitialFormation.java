@@ -44,13 +44,10 @@ public class InitialFormation implements Comparable<InitialFormation> {
     //endregion
 
     //region students
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.INITIAL_FORMATION)
+    @Collection
     private java.util.Collection<Student> students;
 
-    @Property(
-            editing = Editing.ENABLED,
-            publishing = Publishing.ENABLED)
     public java.util.Collection<Student> getStudents() {
         return students;
     }
