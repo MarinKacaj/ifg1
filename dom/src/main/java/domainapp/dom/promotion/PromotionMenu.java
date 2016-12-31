@@ -29,8 +29,7 @@ public class PromotionMenu {
 
     @MemberOrder(sequence = "2")
     public Promotion create(
-            @ParameterLayout(named = "Promotion year")
-            final Integer year) {
+            @ParameterLayout(named = "Promotion year") final Integer year) {
         return promotionRepository.create(year);
     }
 }
