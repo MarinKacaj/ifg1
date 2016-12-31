@@ -3,6 +3,7 @@ package domainapp.dom.student;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.initialformation.InitialFormationRepository;
 import domainapp.dom.letter.Letter;
 import domainapp.dom.promotion.Promotion;
 import domainapp.dom.promotion.PromotionRepository;
@@ -100,6 +101,9 @@ public class Student {
     public static final String INITIAL_FORMATION = "initialFormation";
     public static final String INITIAL_FORMATION_LABEL = "Initial Formation";
 
+    @javax.inject.Inject
+    InitialFormationRepository initialFormationRepository;
+
     @Column(
             name = INITIAL_FORMATION,
             allowsNull = ColumnAllowsNull.FALSE,
@@ -116,6 +120,11 @@ public class Student {
 
     public void setInitialFormation(InitialFormation initialFormation) {
         this.initialFormation = initialFormation;
+    }
+
+    @Action
+    public java.util.Collection<InitialFormation> autoCompleteInitialFormation(final String professionNameSequence) {
+        return initialFormationRepository.findByName(professionNameSequence);
     }
     //endregion
 

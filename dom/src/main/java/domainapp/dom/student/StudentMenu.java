@@ -1,9 +1,9 @@
 package domainapp.dom.student;
 
+import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.*;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 
 
@@ -55,8 +55,9 @@ public class StudentMenu {
             @ParameterLayout(named = Student.EMAIL_LABEL) final String email,
             @ParameterLayout(named = Student.EMPLOYER_LABEL) final String employer,
             @ParameterLayout(named = Student.EMPLOYMENT_STATUS_LABEL) final EmploymentStatus employmentStatus,
-            @ParameterLayout(named = Student.PROMOTION_LABEL) @Nullable final Promotion promotion) {
+            @ParameterLayout(named = Student.PROMOTION_LABEL) final Promotion promotion,
+            @ParameterLayout(named = Student.INITIAL_FORMATION_LABEL) final InitialFormation initialFormation) {
         return studentrepository.create(fullName, gender, birthYear, address, city, country, tel, email,
-                employer, employmentStatus, promotion);
+                employer, employmentStatus, promotion, initialFormation);
     }
 }

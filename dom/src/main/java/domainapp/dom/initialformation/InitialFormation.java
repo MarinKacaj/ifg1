@@ -22,12 +22,24 @@ import javax.jdo.annotations.Persistent;
         column = InitialFormation.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED) // TODO - autocomplete
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = InitialFormationRepository.class,
+        autoCompleteAction = "findByName")
+@javax.jdo.annotations.Queries({
+        @javax.jdo.annotations.Query(
+                name = InitialFormation.FIND_BY_NAME,
+                value = "SELECT FROM domainapp.dom.initialformation.InitialFormation " +
+                        "WHERE " + InitialFormation.NAME + ".indexOf(:" + InitialFormation.NAME + ") >= 0")
+})
 public class InitialFormation implements Comparable<InitialFormation> {
 
     public static final String ID = "id";
 
+    public static final String FIND_BY_NAME = "findInitialFormationByName";
+
     //region name
+    public static final String NAME = "name";
+
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
     private String name;
 
