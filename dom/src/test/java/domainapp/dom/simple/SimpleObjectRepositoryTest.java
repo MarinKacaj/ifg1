@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -114,7 +115,7 @@ public class SimpleObjectRepositoryTest {
             });
 
             // when
-            final List<SimpleObject> list = simpleObjectRepository.listAll();
+            final Collection<SimpleObject> list = simpleObjectRepository.listAll();
 
             // then
             assertThat(list).isEqualTo(all);
