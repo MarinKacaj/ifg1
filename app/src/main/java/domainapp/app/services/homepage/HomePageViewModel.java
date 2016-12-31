@@ -23,7 +23,7 @@ import domainapp.dom.simple.SimpleObjectRepository;
 import org.apache.isis.applib.annotation.ViewModel;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import java.util.List;
+import java.util.Collection;
 
 @ViewModel
 public class HomePageViewModel {
@@ -42,7 +42,7 @@ public class HomePageViewModel {
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
+    public Collection<SimpleObject> getObjects() {
         return simpleObjectRepository.listAll();
     }
 
