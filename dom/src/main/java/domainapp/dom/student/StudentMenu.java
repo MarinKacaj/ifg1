@@ -2,6 +2,7 @@ package domainapp.dom.student;
 
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.mode.Mode;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.*;
 
@@ -58,8 +59,9 @@ public class StudentMenu {
             @ParameterLayout(named = Student.EMPLOYMENT_STATUS_LABEL) final EmploymentStatus employmentStatus,
             @ParameterLayout(named = Student.PROMOTION_LABEL) final Promotion promotion,
             @ParameterLayout(named = Student.INITIAL_FORMATION_LABEL) final InitialFormation initialFormation,
-            @ParameterLayout(named = Student.ACADEMIC_YEAR_LABEL) final AcademicYear year) {
+            @ParameterLayout(named = Student.ACADEMIC_YEAR_LABEL) final AcademicYear year,
+            @ParameterLayout(named = Student.MODE_LABEL) final Mode mode) {
         return studentrepository.create(fullName, gender, birthYear, address, city, country, tel, email,
-                employer, employmentStatus, promotion, initialFormation, year);
+                employer, employmentStatus, promotion, initialFormation, year, mode);
     }
 }

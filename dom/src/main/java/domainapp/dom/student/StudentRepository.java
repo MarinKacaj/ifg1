@@ -2,6 +2,7 @@ package domainapp.dom.student;
 
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.mode.Mode;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -40,7 +41,7 @@ public class StudentRepository {
     public Student create(final String fullName, final Gender gender, final Integer birthYear, final String address,
                           final String city, final String country, final String tel, final String email,
                           final String employer, final EmploymentStatus employmentStatus, final Promotion promotion,
-                          final InitialFormation initialFormation, final AcademicYear year) {
+                          final InitialFormation initialFormation, final AcademicYear year, final Mode mode) {
         final Student student = new Student();
         student.setFullName(fullName);
         student.setGender(gender);
@@ -55,6 +56,7 @@ public class StudentRepository {
         student.setPromotion(promotion);
         student.setInitialFormation(initialFormation);
         student.setYear(year);
+        student.setMode(mode);
         serviceRegistry.injectServicesInto(student);
         repositoryService.persist(student);
         return student;

@@ -2,25 +2,44 @@ package domainapp.dom.mode;
 
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.PropertyLayout;
-import org.apache.isis.applib.annotation.Publishing;
+import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.student.Student;
+import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.*;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/30/2016.
  * Mode
  */
+@javax.jdo.annotations.PersistenceCapable(
+        identityType = IdentityType.DATASTORE,
+        schema = "simple")
+@javax.jdo.annotations.DatastoreIdentity(
+        strategy = IdGeneratorStrategy.IDENTITY,
+        column = InitialFormation.ID)
+@DomainObject(
+        publishing = Publishing.ENABLED,
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = ModeRepository.class,
+        autoCompleteAction = "findByName")
+@javax.jdo.annotations.Queries({
+        @javax.jdo.annotations.Query(
+                name = Mode.FIND_BY_NAME,
+                value = "SELECT FROM domainapp.dom.mode.Mode WHERE " + Mode.NAME + ".indexOf(:" + Mode.NAME + ") >= 0")
+})
 public class Mode implements Comparable<Mode> {
 
+    public static final String ID = "id";
+    public static final String FIND_BY_NAME = "findModeByName";
+
     //region name
+    public static final String NAME = "name";
     public static final String NAME_LABEL = "Name";
 
-    @Column(allowsNull = ColumnAllowsNull.TRUE)
+    @Column(allowsNull = ColumnAllowsNull.TRUE, name = NAME)
     @Unique
     private String name;
 
@@ -37,6 +56,21 @@ public class Mode implements Comparable<Mode> {
     }
     //endregion
 
+    //region students
+    @Persistent(mappedBy = Student.MODE)
+    @org.apache.isis.applib.annotation.Collection
+    private Collection<Student> students;
+
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
+    //endregion
+
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Mode other) {
         return ComparisonChain.start().compare(this.getName(), other.getName()).result();
@@ -46,4 +80,5 @@ public class Mode implements Comparable<Mode> {
     public String toString() {
         return name;
     }
+    //endregion
 }

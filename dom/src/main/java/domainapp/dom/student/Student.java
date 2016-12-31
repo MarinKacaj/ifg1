@@ -1,15 +1,18 @@
 package domainapp.dom.student;
 
+import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.AcademicYearRepository;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.initialformation.InitialFormationRepository;
 import domainapp.dom.letter.Letter;
+import domainapp.dom.mode.Mode;
 import domainapp.dom.promotion.Promotion;
 import domainapp.dom.promotion.PromotionRepository;
 import org.apache.isis.applib.annotation.*;
 
+import javax.annotation.Nonnull;
 import javax.jdo.annotations.*;
 
 /**
@@ -33,7 +36,7 @@ import javax.jdo.annotations.*;
                 value = "SELECT FROM domainapp.dom.student.Student WHERE " +
                         Student.FULL_NAME + ".indexOf(:" + Student.FULL_NAME + ") >= 0")
 })
-public class Student {
+public class Student implements Comparable<Student> {
 
     public static final String FIND_BY_FULL_NAME_QUERY = "findByFullName";
 
@@ -325,8 +328,30 @@ public class Student {
     }
     //endregion
 
-    //region letters
+    //region mode
+    public static final String MODE = "mode";
+    public static final String MODE_LABEL = "Mode";
 
+    @Column(
+            name = MODE,
+            allowsNull = ColumnAllowsNull.FALSE,
+            target = Mode.ID)
+    private Mode mode;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    @PropertyLayout(named = MODE_LABEL)
+    public Mode getMode() {
+        return mode;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+    //endregion
+
+    //region letters
     @Persistent(mappedBy = Letter.STUDENT_ID)
     @Collection
     private java.util.Collection<Letter> letters;
@@ -339,4 +364,14 @@ public class Student {
         this.letters = letters;
     }
     //endregion
+
+    @Override
+    public int compareTo(@Nonnull Student other) {
+        return ComparisonChain.start().compare(this.getFullName(), other.getFullName()).result();
+    }
+
+    @Override
+    public String toString() {
+        return fullName + ", " + year.toString();
+    }
 }

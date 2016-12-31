@@ -2,10 +2,13 @@ package domainapp.dom.mode;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by C.R.C on 12/30/2016.
@@ -31,5 +34,14 @@ public class ModeRepository {
         serviceRegistry.injectServicesInto(mode);
         repositoryService.persist(mode);
         return mode;
+    }
+
+    public Collection<Mode> findByName(final String nameSequence) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put(Mode.NAME, nameSequence);
+
+        return repositoryService.allMatches(
+                new QueryDefault<>(Mode.class, Mode.FIND_BY_NAME, parameters)
+        );
     }
 }
