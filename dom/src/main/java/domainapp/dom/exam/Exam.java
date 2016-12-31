@@ -8,6 +8,7 @@ import domainapp.dom.student.StudentRepository;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import javax.annotation.Nonnull;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
@@ -107,7 +108,7 @@ public class Exam implements Comparable<Exam> {
 
     //region compareTo, toString
     @Override
-    public int compareTo(Exam other) {
+    public int compareTo(@Nonnull Exam other) {
         return ObjectContracts.compare(this, other);
     }
 
