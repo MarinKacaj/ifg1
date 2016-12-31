@@ -22,9 +22,10 @@ import javax.jdo.annotations.Unique;
 @DomainObject(
         publishing = Publishing.ENABLED,
         auditing = Auditing.ENABLED)
+@Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
 public class Professor implements Comparable<Professor> {
 
-    private static final String FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME = "full_name_affiliation";
+    public static final String FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME = "full_name_affiliation";
 
     public static final String FULL_NAME_LABEL = "Full Name";
     public static final String AFFILIATION_LABEL = "Affiliation";
@@ -35,7 +36,6 @@ public class Professor implements Comparable<Professor> {
 
     //region fullName
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
-    @Unique(name = FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
     private String fullName;
 
     @Property(
@@ -53,7 +53,6 @@ public class Professor implements Comparable<Professor> {
 
     //region affiliation
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
-    @Unique(name = FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
     private String affiliation;
 
     @Property(
