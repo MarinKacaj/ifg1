@@ -2,7 +2,7 @@ package domainapp.dom.subject;
 
 import org.apache.isis.applib.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -21,7 +21,7 @@ public class SubjectMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Subject> listAll() {
+    public Collection<Subject> listAll() {
         return subjectRepository.listAll();
     }
 

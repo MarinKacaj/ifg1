@@ -9,7 +9,6 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
-import java.util.List;
 
 /**
  * Created by C.R.C on 12/24/2016.
@@ -47,13 +46,13 @@ public class Promotion implements Comparable<Promotion> {
     //region students
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.PROMOTION)
-    private List<Student> students;
+    private java.util.Collection<Student> students;
 
-    public List<Student> getStudents() {
+    public java.util.Collection<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(java.util.Collection<Student> students) {
         this.students = students;
     }
     //endregion

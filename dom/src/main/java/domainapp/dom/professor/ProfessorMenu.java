@@ -3,7 +3,7 @@ package domainapp.dom.professor;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -22,7 +22,7 @@ public class ProfessorMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Professor> listAll() {
+    public Collection<Professor> listAll() {
         return professorRepository.listAll();
     }
 

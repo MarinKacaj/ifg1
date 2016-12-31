@@ -24,7 +24,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import java.util.List;
+import java.util.Collection;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -37,11 +37,11 @@ public class SimpleObjectRepository {
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
 
-    public List<SimpleObject> listAll() {
+    public Collection<SimpleObject> listAll() {
         return repositoryService.allInstances(SimpleObject.class);
     }
 
-    public List<SimpleObject> findByName(final String name) {
+    public Collection<SimpleObject> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
                         SimpleObject.class,

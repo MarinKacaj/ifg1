@@ -2,7 +2,7 @@ package domainapp.dom.initialformation;
 
 import org.apache.isis.applib.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/25/2016.
@@ -23,7 +23,7 @@ public class InitialFormationMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<InitialFormation> listAll() {
+    public Collection<InitialFormation> listAll() {
         return initialFormationRepository.listAll();
     }
 

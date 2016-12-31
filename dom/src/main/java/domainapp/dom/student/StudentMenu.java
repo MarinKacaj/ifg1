@@ -14,6 +14,9 @@ import java.util.Collection;
 )
 public class StudentMenu {
 
+    @javax.inject.Inject
+    StudentRepository studentrepository;
+
     @Action(
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
@@ -52,8 +55,4 @@ public class StudentMenu {
             @ParameterLayout(named = Student.EMPLOYMENT_STATUS_LABEL) final EmploymentStatus employmentStatus) {
         return studentrepository.create(fullName, gender, birthYear, address, city, country, tel, email, employer, employmentStatus);
     }
-
-
-    @javax.inject.Inject
-    StudentRepository studentrepository;
 }

@@ -5,7 +5,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/25/2016.
@@ -22,7 +22,7 @@ public class InitialFormationRepository {
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
 
-    public List<InitialFormation> listAll() {
+    public Collection<InitialFormation> listAll() {
         return repositoryService.allInstances(InitialFormation.class);
     }
 

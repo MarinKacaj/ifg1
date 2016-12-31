@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
-import java.util.List;
 
 /**
  * Created by C.R.C on 12/25/2016.
@@ -47,16 +46,16 @@ public class InitialFormation implements Comparable<InitialFormation> {
     //region students
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.INITIAL_FORMATION)
-    private List<Student> students;
+    private java.util.Collection<Student> students;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public List<Student> getStudents() {
+    public java.util.Collection<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(java.util.Collection<Student> students) {
         this.students = students;
     }
     //endregion

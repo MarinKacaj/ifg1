@@ -2,7 +2,7 @@ package domainapp.dom.promotion;
 
 import org.apache.isis.applib.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/24/2016.
@@ -23,7 +23,7 @@ public class PromotionMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Promotion> listAll() {
+    public Collection<Promotion> listAll() {
         return promotionRepository.listAll();
     }
 

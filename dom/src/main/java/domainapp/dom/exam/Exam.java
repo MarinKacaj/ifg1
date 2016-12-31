@@ -8,7 +8,6 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
-import java.util.List;
 
 /**
  * Created by C.R.C on 12/18/2016.
@@ -44,7 +43,7 @@ public class Exam implements Comparable<Exam> {
     }
 
     @ActionLayout(hidden = Where.NOWHERE)
-    public List<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
+    public java.util.Collection<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
     //endregion

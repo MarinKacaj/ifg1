@@ -6,7 +6,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -22,7 +22,7 @@ public class LetterRepository {
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
 
-    public List<Letter> listAll() {
+    public Collection<Letter> listAll() {
         return repositoryService.allInstances(Letter.class);
     }
 

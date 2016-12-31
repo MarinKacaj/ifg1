@@ -2,7 +2,7 @@ package domainapp.dom.mode;
 
 import org.apache.isis.applib.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/30/2016.
@@ -21,7 +21,7 @@ public class ModeMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Mode> listAll() {
+    public Collection<Mode> listAll() {
         return modeRepository.listAll();
     }
 

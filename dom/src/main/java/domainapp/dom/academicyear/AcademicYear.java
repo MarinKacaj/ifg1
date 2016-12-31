@@ -10,7 +10,6 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
-import java.util.List;
 
 /**
  * Created by C.R.C on 12/17/2016.
@@ -61,16 +60,16 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //region exams
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Exam.ACADEMIC_YEAR_ID)
-    private List<Exam> exams;
+    private java.util.Collection<Exam> exams;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public List<Exam> getExams() {
+    public java.util.Collection<Exam> getExams() {
         return exams;
     }
 
-    public void setExams(List<Exam> exams) {
+    public void setExams(java.util.Collection<Exam> exams) {
         this.exams = exams;
     }
     //endregion
@@ -78,16 +77,16 @@ public class AcademicYear implements Comparable<AcademicYear> {
     //region students
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Persistent(mappedBy = Student.ACADEMIC_YEAR)
-    private List<Student> students;
+    private java.util.Collection<Student> students;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public List<Student> getStudents() {
+    public java.util.Collection<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(java.util.Collection<Student> students) {
         this.students = students;
     }
     //endregion

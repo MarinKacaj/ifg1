@@ -5,7 +5,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/30/2016.
@@ -21,7 +21,7 @@ public class ModeRepository {
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
 
-    public List<Mode> listAll() {
+    public Collection<Mode> listAll() {
         return repositoryService.allInstances(Mode.class);
     }
 

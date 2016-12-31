@@ -4,7 +4,7 @@ import domainapp.dom.simple.SimpleObjectMenu;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/17/2016.
@@ -26,7 +26,7 @@ public class AcademicYearMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<AcademicYear> listAll() {
+    public Collection<AcademicYear> listAll() {
         return academicYearRepository.listAll();
     }
 

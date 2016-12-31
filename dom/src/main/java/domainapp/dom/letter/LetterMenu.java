@@ -3,7 +3,7 @@ package domainapp.dom.letter;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -22,7 +22,7 @@ public class LetterMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Letter> listAll() {
+    public Collection<Letter> listAll() {
         return letterRepository.listAll();
     }
 
