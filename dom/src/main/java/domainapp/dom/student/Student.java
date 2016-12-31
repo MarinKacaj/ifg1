@@ -4,6 +4,7 @@ import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.AcademicYearRepository;
+import domainapp.dom.exam.Exam;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.initialformation.InitialFormationRepository;
 import domainapp.dom.letter.Letter;
@@ -362,6 +363,20 @@ public class Student implements Comparable<Student> {
 
     public void setLetters(java.util.Collection<Letter> letters) {
         this.letters = letters;
+    }
+    //endregion
+
+    //region exams
+    @Persistent(mappedBy = Exam.STUDENT)
+    @Collection
+    private java.util.Collection<Exam> exams;
+
+    public java.util.Collection<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(java.util.Collection<Exam> exams) {
+        this.exams = exams;
     }
     //endregion
 

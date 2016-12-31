@@ -3,9 +3,12 @@ package domainapp.dom.exam;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.AcademicYearRepository;
+import domainapp.dom.student.Student;
+import domainapp.dom.student.StudentRepository;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 
@@ -26,14 +29,18 @@ public class Exam implements Comparable<Exam> {
 
     //region academicYear
     public static final String ACADEMIC_YEAR_ID = "academicYear";
+    public static final String ACADEMIC_YEAR_LABEL = "Academic Year";
 
     @javax.inject.Inject
     private AcademicYearRepository academicYearRepository;
 
+    @Column(allowsNull = ColumnAllowsNull.FALSE, target = "id", name = ACADEMIC_YEAR_ID)
+    private AcademicYear academicYear;
+
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Academic Year")
+    @PropertyLayout(named = ACADEMIC_YEAR_LABEL)
     public AcademicYear getAcademicYear() {
         return academicYear;
     }
@@ -42,22 +49,22 @@ public class Exam implements Comparable<Exam> {
         this.academicYear = academicYear;
     }
 
-    @ActionLayout(hidden = Where.NOWHERE)
+    @Action
     public java.util.Collection<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
     //endregion
 
     //region mark
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
+    public static final String MARK_LABEL = "Mark";
+
+    @Column(allowsNull = ColumnAllowsNull.FALSE)
     private Integer mark;
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE, target = "id", name = ACADEMIC_YEAR_ID)
-    private AcademicYear academicYear;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    @PropertyLayout(named = "Mark")
+    @PropertyLayout(named = MARK_LABEL)
     public Integer getMark() {
         return mark;
     }
@@ -67,6 +74,38 @@ public class Exam implements Comparable<Exam> {
     }
     //endregion
 
+    //region student
+    public static final String STUDENT = "student";
+    public static final String STUDENT_LABEL = "Student";
+
+    @javax.inject.Inject
+    StudentRepository studentRepository;
+
+    @Column(
+            name = STUDENT,
+            allowsNull = ColumnAllowsNull.FALSE,
+            target = Student.ID)
+    private Student student;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    @PropertyLayout(named = STUDENT_LABEL)
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    @Action
+    public java.util.Collection<Student> autoCompleteStudent(final String studentNameSequence) {
+        return studentRepository.findByNameSequence(studentNameSequence);
+    }
+    //endregion
+
+    //region compareTo, toString
     @Override
     public int compareTo(Exam other) {
         return ObjectContracts.compare(this, other);
@@ -76,4 +115,5 @@ public class Exam implements Comparable<Exam> {
     public String toString() {
         return mark + " for " + academicYear;
     }
+    //endregion
 }

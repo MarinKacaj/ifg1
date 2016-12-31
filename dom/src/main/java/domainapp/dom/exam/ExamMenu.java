@@ -2,6 +2,7 @@ package domainapp.dom.exam;
 
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.simple.SimpleObjectMenu;
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
@@ -34,11 +35,10 @@ public class ExamMenu {
     @Action(domainEvent = SimpleObjectMenu.CreateDomainEvent.class)
     @MemberOrder(sequence = "3")
     public Exam create(
-            @ParameterLayout(named = "Mark")
-            final Integer mark,
-            @ParameterLayout(named = "Academic Year")
-            final AcademicYear academicYear) {
-        return examRepository.create(mark, academicYear);
+            @ParameterLayout(named = Exam.MARK_LABEL) final Integer mark,
+            @ParameterLayout(named = Exam.ACADEMIC_YEAR_LABEL) final AcademicYear academicYear,
+            @ParameterLayout(named = Exam.STUDENT_LABEL) final Student student) {
+        return examRepository.create(mark, academicYear, student);
     }
 
     public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjectMenu> {

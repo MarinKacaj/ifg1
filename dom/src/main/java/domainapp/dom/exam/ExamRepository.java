@@ -1,6 +1,7 @@
 package domainapp.dom.exam;
 
 import domainapp.dom.academicyear.AcademicYear;
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
@@ -26,10 +27,11 @@ public class ExamRepository {
         return repositoryService.allInstances(Exam.class);
     }
 
-    public Exam create(final Integer mark, final AcademicYear academicYear) {
+    public Exam create(final Integer mark, final AcademicYear academicYear, final Student student) {
         final Exam exam = new Exam();
         exam.setMark(mark);
         exam.setAcademicYear(academicYear);
+        exam.setStudent(student);
         serviceRegistry.injectServicesInto(exam);
         repositoryService.persist(exam);
         return exam;
