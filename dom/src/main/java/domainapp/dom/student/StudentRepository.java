@@ -1,5 +1,6 @@
 package domainapp.dom.student;
 
+import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.DomainService;
@@ -39,7 +40,7 @@ public class StudentRepository {
     public Student create(final String fullName, final Gender gender, final Integer birthYear, final String address,
                           final String city, final String country, final String tel, final String email,
                           final String employer, final EmploymentStatus employmentStatus, final Promotion promotion,
-                          final InitialFormation initialFormation) {
+                          final InitialFormation initialFormation, final AcademicYear year) {
         final Student student = new Student();
         student.setFullName(fullName);
         student.setGender(gender);
@@ -53,6 +54,7 @@ public class StudentRepository {
         student.setEmploymentStatus(employmentStatus);
         student.setPromotion(promotion);
         student.setInitialFormation(initialFormation);
+        student.setYear(year);
         serviceRegistry.injectServicesInto(student);
         repositoryService.persist(student);
         return student;

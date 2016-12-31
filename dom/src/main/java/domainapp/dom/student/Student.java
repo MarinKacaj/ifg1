@@ -2,6 +2,7 @@ package domainapp.dom.student;
 
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
+import domainapp.dom.academicyear.AcademicYearRepository;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.initialformation.InitialFormationRepository;
 import domainapp.dom.letter.Letter;
@@ -297,6 +298,9 @@ public class Student {
     public static final String ACADEMIC_YEAR = "year";
     public static final String ACADEMIC_YEAR_LABEL = "Year";
 
+    @javax.inject.Inject
+    AcademicYearRepository academicYearRepository;
+
     @Column(
             name = ACADEMIC_YEAR,
             allowsNull = ColumnAllowsNull.FALSE,
@@ -313,6 +317,11 @@ public class Student {
 
     public void setYear(AcademicYear year) {
         this.year = year;
+    }
+
+    @Action
+    public java.util.Collection<AcademicYear> autoCompleteYear(final String startYearDigitSequence) {
+        return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
     //endregion
 
