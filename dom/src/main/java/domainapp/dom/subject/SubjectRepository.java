@@ -1,5 +1,6 @@
 package domainapp.dom.subject;
 
+import domainapp.dom.module.Module;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.query.QueryDefault;
@@ -28,9 +29,10 @@ public class SubjectRepository {
         return repositoryService.allInstances(Subject.class);
     }
 
-    public Subject create(final String name) {
+    public Subject create(final String name, final Module module) {
         final Subject subject = new Subject();
         subject.setName(name);
+        subject.setModule(module);
         serviceRegistry.injectServicesInto(subject);
         repositoryService.persist(subject);
         return subject;

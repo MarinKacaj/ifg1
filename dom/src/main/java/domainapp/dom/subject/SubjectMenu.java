@@ -1,5 +1,6 @@
 package domainapp.dom.subject;
 
+import domainapp.dom.module.Module;
 import org.apache.isis.applib.annotation.*;
 
 import java.util.Collection;
@@ -27,7 +28,8 @@ public class SubjectMenu {
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
     @MemberOrder(sequence = "2")
-    public Subject create(@ParameterLayout(named = Subject.NAME_LABEL) final String name) {
-        return subjectRepository.create(name);
+    public Subject create(@ParameterLayout(named = Subject.NAME_LABEL) final String name,
+                          @ParameterLayout(named = Subject.MODULE_LABEL) final Module module) {
+        return subjectRepository.create(name, module);
     }
 }

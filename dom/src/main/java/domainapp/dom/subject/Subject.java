@@ -2,6 +2,8 @@ package domainapp.dom.subject;
 
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
+import domainapp.dom.module.Module;
+import domainapp.dom.module.ModuleRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
@@ -50,6 +52,37 @@ public class Subject implements Comparable<Subject> {
 
     public void setName(String name) {
         this.name = name;
+    }
+    //endregion
+
+    //region module
+    public static final String MODULE = "module";
+    public static final String MODULE_LABEL = "Module";
+
+    @javax.inject.Inject
+    ModuleRepository moduleRepository;
+
+    @Column(
+            name = MODULE,
+            allowsNull = ColumnAllowsNull.FALSE,
+            target = Module.ID)
+    private Module module;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    @PropertyLayout(named = MODULE_LABEL)
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    @Action
+    public java.util.Collection<Module> autoCompleteModule(final String nameSequence) {
+        return moduleRepository.findByNameSequence(nameSequence);
     }
     //endregion
 

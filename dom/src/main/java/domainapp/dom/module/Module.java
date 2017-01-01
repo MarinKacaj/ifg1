@@ -2,13 +2,12 @@ package domainapp.dom.module;
 
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
+import domainapp.dom.subject.Subject;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.*;
+import java.util.Collection;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -19,16 +18,29 @@ import javax.jdo.annotations.Unique;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = Module.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED)
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = ModuleRepository.class,
+        autoCompleteAction = "findByNameSequence")
+@Queries({
+        @Query(
+                name = Module.FIND_BY_NAME_QUERY,
+                value = "SELECT FROM domainapp.dom.module.Module WHERE " +
+                        Module.NAME + ".indexOf(:" + Module.NAME + ") >= 0")
+})
 public class Module implements Comparable<Module> {
 
+    public static final String ID = "id";
+
+    public static final String FIND_BY_NAME_QUERY = "findModuleByName";
+
     //region name
+    public static final String NAME = "name";
     public static final String NAME_LABEL = "Name";
 
-    @Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Column(allowsNull = ColumnAllowsNull.FALSE, name = NAME)
     @Unique
     private String name;
 
@@ -61,6 +73,20 @@ public class Module implements Comparable<Module> {
 
     public void setCoefficient(Float coefficient) {
         this.coefficient = coefficient;
+    }
+    //endregion
+
+    //region subjects
+    @Persistent(mappedBy = Subject.MODULE)
+    @org.apache.isis.applib.annotation.Collection
+    private Collection<Subject> subjects;
+
+    public Collection<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setStudents(Collection<Subject> subjects) {
+        this.subjects = subjects;
     }
     //endregion
 
