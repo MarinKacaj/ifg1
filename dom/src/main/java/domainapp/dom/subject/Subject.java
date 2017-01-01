@@ -5,10 +5,7 @@ import domainapp.dom.ColumnAllowsNull;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.*;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -19,16 +16,27 @@ import javax.jdo.annotations.Unique;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = Subject.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
         auditing = Auditing.ENABLED)
+@Queries({
+        @Query(
+                name = Subject.FIND_BY_NAME_QUERY,
+                value = "SELECT FROM domainapp.dom.subject.Subject WHERE " +
+                        Subject.NAME + ".indexOf(:" + Subject.NAME + ") >= 0")
+})
 public class Subject implements Comparable<Subject> {
 
+    public static final String ID = "id";
+
+    public static final String FIND_BY_NAME_QUERY = "findSubjectByName";
+
     //region name
+    public static final String NAME = "name";
     public static final String NAME_LABEL = "Name";
 
-    @Column(allowsNull = ColumnAllowsNull.TRUE)
+    @Column(allowsNull = ColumnAllowsNull.TRUE, name = NAME)
     @Unique
     private String name;
 

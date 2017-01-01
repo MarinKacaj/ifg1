@@ -3,6 +3,7 @@ package domainapp.dom.professor;
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.exam.Exam;
+import domainapp.dom.promotion.PromotionRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
@@ -20,7 +21,9 @@ import javax.jdo.annotations.*;
         column = Professor.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED)
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = PromotionRepository.class,
+        autoCompleteAction = "findByNameSequence")
 @Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
 @Queries({
         @Query(

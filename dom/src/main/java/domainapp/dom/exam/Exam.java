@@ -7,6 +7,8 @@ import domainapp.dom.professor.Professor;
 import domainapp.dom.professor.ProfessorRepository;
 import domainapp.dom.student.Student;
 import domainapp.dom.student.StudentRepository;
+import domainapp.dom.subject.Subject;
+import domainapp.dom.subject.SubjectRepository;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.util.ObjectContracts;
 
@@ -136,6 +138,37 @@ public class Exam implements Comparable<Exam> {
     @Action
     public java.util.Collection<Professor> autoCompleteProfessor(final String fullNameSequence) {
         return professorRepository.findByNameSequence(fullNameSequence);
+    }
+    //endregion
+
+    //region professor
+    public static final String SUBJECT = "subject";
+    public static final String SUBJECT_LABEL = "Subject";
+
+    @javax.inject.Inject
+    SubjectRepository subjectRepository;
+
+    @Column(
+            name = SUBJECT,
+            allowsNull = ColumnAllowsNull.FALSE,
+            target = Subject.ID)
+    private Subject subject;
+
+    @Property(
+            editing = Editing.ENABLED,
+            publishing = Publishing.ENABLED)
+    @PropertyLayout(named = SUBJECT_LABEL)
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Action
+    public java.util.Collection<Subject> autoCompleteSubject(final String nameSequence) {
+        return subjectRepository.findByNameSequence(nameSequence);
     }
     //endregion
 
