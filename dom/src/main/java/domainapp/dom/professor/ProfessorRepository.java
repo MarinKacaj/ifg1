@@ -2,10 +2,13 @@ package domainapp.dom.professor;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -37,5 +40,11 @@ public class ProfessorRepository {
         serviceRegistry.injectServicesInto(professor);
         repositoryService.persist(professor);
         return professor;
+    }
+
+    public Collection<Professor> findByNameSequence(final String fullNameSequence) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put(Professor.FULL_NAME, fullNameSequence);
+        return repositoryService.allMatches(new QueryDefault<>(Professor.class, Professor.FIND_BY_FULL_NAME_QUERY, parameters));
     }
 }

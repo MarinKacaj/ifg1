@@ -1,6 +1,7 @@
 package domainapp.dom.exam;
 
 import domainapp.dom.academicyear.AcademicYear;
+import domainapp.dom.professor.Professor;
 import domainapp.dom.simple.SimpleObjectMenu;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
@@ -37,8 +38,9 @@ public class ExamMenu {
     public Exam create(
             @ParameterLayout(named = Exam.MARK_LABEL) final Integer mark,
             @ParameterLayout(named = Exam.ACADEMIC_YEAR_LABEL) final AcademicYear academicYear,
-            @ParameterLayout(named = Exam.STUDENT_LABEL) final Student student) {
-        return examRepository.create(mark, academicYear, student);
+            @ParameterLayout(named = Exam.STUDENT_LABEL) final Student student,
+            @ParameterLayout(named = Exam.PROFESSOR_LABEL) final Professor professor) {
+        return examRepository.create(mark, academicYear, student, professor);
     }
 
     public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjectMenu> {

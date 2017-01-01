@@ -2,12 +2,11 @@ package domainapp.dom.professor;
 
 import com.google.common.collect.ComparisonChain;
 import domainapp.dom.ColumnAllowsNull;
+import domainapp.dom.exam.Exam;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.*;
 
 /**
  * Created by C.R.C on 12/28/2016.
@@ -18,14 +17,23 @@ import javax.jdo.annotations.Unique;
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
+        column = Professor.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
         auditing = Auditing.ENABLED)
 @Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
+@Queries({
+        @Query(
+                name = Professor.FIND_BY_FULL_NAME_QUERY,
+                value = "SELECT FROM domainapp.dom.professor.Professor WHERE " +
+                        Professor.FULL_NAME + ".indexOf(:" + Professor.FULL_NAME + ") >= 0")
+})
 public class Professor implements Comparable<Professor> {
 
+    public static final String ID = "id";
+
     public static final String FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME = "full_name_affiliation";
+    public static final String FIND_BY_FULL_NAME_QUERY = "findProfessorByFullName";
 
     public static final String FULL_NAME_LABEL = "Full Name";
     public static final String AFFILIATION_LABEL = "Affiliation";
@@ -35,6 +43,8 @@ public class Professor implements Comparable<Professor> {
     public static final String TEACHING_END_YEAR_LABEL = "Teaching last year";
 
     //region fullName
+    public static final String FULL_NAME = "fullName";
+
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.FALSE)
     private String fullName;
 
@@ -133,6 +143,20 @@ public class Professor implements Comparable<Professor> {
 
     public void setTeachingEndYear(Integer teachingEndYear) {
         this.teachingEndYear = teachingEndYear;
+    }
+    //endregion
+
+    //region exams
+    @Persistent(mappedBy = Exam.PROFESSOR)
+    @Collection
+    private java.util.Collection<Exam> exams;
+
+    public java.util.Collection<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(java.util.Collection<Exam> exams) {
+        this.exams = exams;
     }
     //endregion
 
