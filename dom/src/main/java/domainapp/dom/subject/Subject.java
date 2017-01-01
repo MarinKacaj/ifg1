@@ -21,7 +21,9 @@ import javax.jdo.annotations.*;
         column = Subject.ID)
 @DomainObject(
         publishing = Publishing.ENABLED,
-        auditing = Auditing.ENABLED)
+        auditing = Auditing.ENABLED,
+        autoCompleteRepository = SubjectRepository.class,
+        autoCompleteAction = "findByNameSequence")
 @Queries({
         @Query(
                 name = Subject.FIND_BY_NAME_QUERY,
