@@ -88,6 +88,7 @@ public class Subject implements Comparable<Subject> {
     }
     //endregion
 
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Subject other) {
         return ComparisonChain.start().compare(this.getName(), other.getName()).result();
@@ -97,4 +98,5 @@ public class Subject implements Comparable<Subject> {
     public String toString() {
         return name;
     }
+    //endregion
 }

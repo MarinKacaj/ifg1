@@ -380,6 +380,7 @@ public class Student implements Comparable<Student> {
     }
     //endregion
 
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Student other) {
         return ComparisonChain.start().compare(this.getFullName(), other.getFullName()).result();
@@ -389,4 +390,5 @@ public class Student implements Comparable<Student> {
     public String toString() {
         return fullName + ", " + year.toString();
     }
+    //endregion
 }

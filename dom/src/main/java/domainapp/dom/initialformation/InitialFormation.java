@@ -69,14 +69,12 @@ public class InitialFormation implements Comparable<InitialFormation> {
     }
     //endregion
 
-    //region compareTo
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull InitialFormation other) {
         return ComparisonChain.start().compare(this.getName(), other.getName()).result();
     }
-    //endregion
 
-    //region toString
     @Override
     public String toString() {
         return getName();

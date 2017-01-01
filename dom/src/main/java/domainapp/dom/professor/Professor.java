@@ -162,14 +162,12 @@ public class Professor implements Comparable<Professor> {
     }
     //endregion
 
-    //region compareTo
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Professor other) {
         return ComparisonChain.start().compare(this.getFullName(), other.getFullName()).result();
     }
-    //endregion
 
-    //region toString
     @Override
     public String toString() {
         return fullName + ", " + affiliation;

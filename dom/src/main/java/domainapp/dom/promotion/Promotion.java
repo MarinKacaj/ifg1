@@ -66,6 +66,7 @@ public class Promotion implements Comparable<Promotion> {
     }
     //endregion
 
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Promotion other) {
         return (int) Math.signum(this.getYear() - other.getYear());
@@ -75,4 +76,5 @@ public class Promotion implements Comparable<Promotion> {
     public String toString() {
         return year + " Promotion";
     }
+    //endregion
 }

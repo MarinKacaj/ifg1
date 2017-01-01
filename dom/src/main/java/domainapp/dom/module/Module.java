@@ -90,6 +90,7 @@ public class Module implements Comparable<Module> {
     }
     //endregion
 
+    //region compareTo, toString
     @Override
     public int compareTo(@Nonnull Module other) {
         return ComparisonChain.start().compare(this.getName(), other.getName()).result();
@@ -99,4 +100,5 @@ public class Module implements Comparable<Module> {
     public String toString() {
         return name;
     }
+    //endregion
 }
