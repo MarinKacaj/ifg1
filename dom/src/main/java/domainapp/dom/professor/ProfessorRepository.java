@@ -42,9 +42,12 @@ public class ProfessorRepository {
         return professor;
     }
 
-    public Collection<Professor> findByNameSequence(final String fullNameSequence) {
+    public Collection<Professor> findByNameSequence(final String searchSequence) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put(Professor.FULL_NAME, fullNameSequence);
-        return repositoryService.allMatches(new QueryDefault<>(Professor.class, Professor.FIND_BY_FULL_NAME_QUERY, parameters));
+        parameters.put(Professor.FULL_NAME, searchSequence);
+        parameters.put(Professor.AFFILIATION, searchSequence);
+        return repositoryService.allMatches(
+                new QueryDefault<>(Professor.class, Professor.FIND_BY_FULL_NAME_OR_AFFILIATION_QUERY, parameters)
+        );
     }
 }

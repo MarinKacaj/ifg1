@@ -136,8 +136,8 @@ public class Exam implements Comparable<Exam> {
     }
 
     @Action
-    public java.util.Collection<Professor> autoCompleteProfessor(final String fullNameSequence) {
-        return professorRepository.findByNameSequence(fullNameSequence);
+    public java.util.Collection<Professor> autoCompleteProfessor(final String searchSequence) {
+        return professorRepository.findByNameSequence(searchSequence);
     }
     //endregion
 
