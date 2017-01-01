@@ -21,7 +21,7 @@ import javax.jdo.annotations.*;
 @DomainObject(
         publishing = Publishing.ENABLED,
         auditing = Auditing.ENABLED,
-        autoCompleteRepository = Professor.class,
+        autoCompleteRepository = ProfessorRepository.class,
         autoCompleteAction = "findByNameSequence")
 @Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
 @Queries({
