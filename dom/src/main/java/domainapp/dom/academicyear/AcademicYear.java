@@ -6,10 +6,7 @@ import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.*;
 
 /**
  * Created by C.R.C on 12/17/2016.
@@ -43,6 +40,7 @@ public class AcademicYear implements Comparable<AcademicYear> {
     public static final String START_YEAR = "startYear";
 
     @Column(allowsNull = ColumnAllowsNull.FALSE)
+    @Unique
     private Integer startYear;
 
     @Property(
