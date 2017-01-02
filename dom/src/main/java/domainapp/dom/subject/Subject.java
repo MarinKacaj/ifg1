@@ -1,6 +1,7 @@
 package domainapp.dom.subject;
 
 import com.google.common.collect.ComparisonChain;
+import domainapp.dom.AutoCompleteConfig;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.module.Module;
 import domainapp.dom.module.ModuleRepository;
@@ -78,7 +79,8 @@ public class Subject implements Comparable<Subject> {
     }
 
     @Action
-    public java.util.Collection<Module> autoCompleteModule(final String nameSequence) {
+    public java.util.Collection<Module> autoCompleteModule(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                           final String nameSequence) {
         return moduleRepository.findByNameSequence(nameSequence);
     }
     //endregion

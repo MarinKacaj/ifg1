@@ -2,6 +2,7 @@ package domainapp.dom.letter;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
+import domainapp.dom.AutoCompleteConfig;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.student.Student;
 import domainapp.dom.student.StudentRepository;
@@ -68,7 +69,8 @@ public class Letter implements Comparable<Letter> {
         this.student = student;
     }
 
-    public Collection<Student> autoCompleteStudent(final String fullNameSequence) {
+    public Collection<Student> autoCompleteStudent(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                   final String fullNameSequence) {
         return studentRepository.findByNameSequence(fullNameSequence);
     }
     //endregion

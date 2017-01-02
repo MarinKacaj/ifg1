@@ -1,5 +1,6 @@
 package domainapp.dom.exam;
 
+import domainapp.dom.AutoCompleteConfig;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.AcademicYearRepository;
@@ -55,7 +56,8 @@ public class Exam implements Comparable<Exam> {
     }
 
     @Action
-    public java.util.Collection<AcademicYear> autoCompleteAcademicYear(final String startYearDigitSequence) {
+    public java.util.Collection<AcademicYear> autoCompleteAcademicYear(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                                       final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
     //endregion
@@ -105,7 +107,8 @@ public class Exam implements Comparable<Exam> {
     }
 
     @Action
-    public java.util.Collection<Student> autoCompleteStudent(final String studentNameSequence) {
+    public java.util.Collection<Student> autoCompleteStudent(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                             final String studentNameSequence) {
         return studentRepository.findByNameSequence(studentNameSequence);
     }
     //endregion

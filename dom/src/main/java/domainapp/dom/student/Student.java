@@ -1,6 +1,7 @@
 package domainapp.dom.student;
 
 import com.google.common.collect.ComparisonChain;
+import domainapp.dom.AutoCompleteConfig;
 import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.AcademicYearRepository;
@@ -128,7 +129,8 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<InitialFormation> autoCompleteInitialFormation(final String professionNameSequence) {
+    public java.util.Collection<InitialFormation> autoCompleteInitialFormation(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                                               final String professionNameSequence) {
         return initialFormationRepository.findByName(professionNameSequence);
     }
     //endregion
@@ -293,7 +295,8 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<Promotion> autoCompletePromotion(final String yearDigitSequence) {
+    public java.util.Collection<Promotion> autoCompletePromotion(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                                 final String yearDigitSequence) {
         return promotionRepository.findByYearDigitSequence(yearDigitSequence);
     }
     //endregion
@@ -324,7 +327,8 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<AcademicYear> autoCompleteYear(final String startYearDigitSequence) {
+    public java.util.Collection<AcademicYear> autoCompleteYear(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+                                                               final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
     //endregion
