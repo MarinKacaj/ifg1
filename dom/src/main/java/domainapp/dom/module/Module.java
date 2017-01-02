@@ -24,17 +24,9 @@ import java.util.Collection;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = ModuleRepository.class,
         autoCompleteAction = "findByNameSequence")
-@Queries({
-        @Query(
-                name = Module.FIND_BY_NAME_QUERY,
-                value = "SELECT FROM domainapp.dom.module.Module WHERE " +
-                        Module.NAME + ".indexOf(:" + Module.NAME + ") >= 0")
-})
 public class Module implements Comparable<Module> {
 
     public static final String ID = "id";
-
-    public static final String FIND_BY_NAME_QUERY = "findModuleByName";
 
     //region name
     public static final String NAME = "name";

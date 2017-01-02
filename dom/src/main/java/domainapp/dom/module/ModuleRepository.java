@@ -2,13 +2,11 @@ package domainapp.dom.module;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by C.R.C on 12/30/2016.
@@ -23,6 +21,8 @@ public class ModuleRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+    @javax.inject.Inject
+    IsisJdoSupport isisJdoSupport;
 
     public Collection<Module> listAll() {
         return repositoryService.allInstances(Module.class);
@@ -38,8 +38,7 @@ public class ModuleRepository {
     }
 
     public Collection<Module> findByNameSequence(final String nameSequence) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put(Module.NAME, nameSequence);
-        return repositoryService.allMatches(new QueryDefault<>(Module.class, Module.FIND_BY_NAME_QUERY, parameters));
+        final QModule qModule = QModule.candidate();
+        return isisJdoSupport.executeQuery(Module.class, qModule.name.indexOf(nameSequence).gteq(0));
     }
 }
