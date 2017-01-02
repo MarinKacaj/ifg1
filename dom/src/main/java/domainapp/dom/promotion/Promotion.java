@@ -1,6 +1,5 @@
 package domainapp.dom.promotion;
 
-import domainapp.dom.ColumnAllowsNull;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
@@ -31,7 +30,7 @@ public class Promotion implements Comparable<Promotion> {
     //region year
     public static final String YEAR = "year";
 
-    @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.TRUE, name = YEAR)
+    @javax.jdo.annotations.Column(name = YEAR)
     private int year;
 
     @Property(

@@ -278,7 +278,7 @@ public class Student implements Comparable<Student> {
 
     @Column(
             name = PROMOTION,
-            allowsNull = ColumnAllowsNull.FALSE,
+            allowsNull = ColumnAllowsNull.TRUE,
             target = Promotion.ID)
     private Promotion promotion;
 
