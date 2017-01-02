@@ -3,6 +3,7 @@ package domainapp.dom.academicyear;
 import domainapp.dom.YearSequenceFilter;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
@@ -22,6 +23,8 @@ public class AcademicYearRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+    @javax.inject.Inject
+    IsisJdoSupport isisJdoSupport;
 
     public List<AcademicYear> listAll() {
         return repositoryService.allInstances(AcademicYear.class);
@@ -36,8 +39,7 @@ public class AcademicYearRepository {
     }
 
     public Collection<AcademicYear> findByStartYearDigitSequence(final String startYearDigitSequence) {
-        return YearSequenceFilter.filterByYearDigitSequence(
-                repositoryService, AcademicYear.FIND_BY_START_YEAR_QUERY,
-                AcademicYear.class, AcademicYear.START_YEAR, startYearDigitSequence);
+        int minYearAfterPadding = YearSequenceFilter.pad(startYearDigitSequence);
+        return isisJdoSupport.executeQuery(AcademicYear.class, QAcademicYear.candidate().startYear.gteq(minYearAfterPadding));
     }
 }

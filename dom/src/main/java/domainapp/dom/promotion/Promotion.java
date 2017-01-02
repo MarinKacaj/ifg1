@@ -38,16 +38,16 @@ public class Promotion implements Comparable<Promotion> {
     public static final String YEAR = "year";
 
     @javax.jdo.annotations.Column(allowsNull = ColumnAllowsNull.TRUE, name = YEAR)
-    private Integer year;
+    private int year;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public Integer getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(int year) {
         this.year = year;
     }
     //endregion

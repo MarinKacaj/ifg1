@@ -2,13 +2,11 @@ package domainapp.dom.professor;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -23,6 +21,8 @@ public class ProfessorRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+    @javax.inject.Inject
+    IsisJdoSupport isisJdoSupport;
 
     public Collection<Professor> listAll() {
         return repositoryService.allInstances(Professor.class);
@@ -43,11 +43,8 @@ public class ProfessorRepository {
     }
 
     public Collection<Professor> findByNameSequence(final String searchSequence) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put(Professor.FULL_NAME, searchSequence);
-        parameters.put(Professor.AFFILIATION, searchSequence);
-        return repositoryService.allMatches(
-                new QueryDefault<>(Professor.class, Professor.FIND_BY_FULL_NAME_OR_AFFILIATION_QUERY, parameters)
-        );
+        QProfessor qProfessor = QProfessor.candidate();
+        return isisJdoSupport.executeQuery(Professor.class, qProfessor.fullName.indexOf(searchSequence).gteq(0)
+                .or(qProfessor.affiliation.indexOf(searchSequence).gteq(0)));
     }
 }

@@ -3,6 +3,7 @@ package domainapp.dom.promotion;
 import domainapp.dom.YearSequenceFilter;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
@@ -21,6 +22,8 @@ public class PromotionRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+    @javax.inject.Inject
+    IsisJdoSupport isisJdoSupport;
 
     public Collection<Promotion> listAll() {
         return repositoryService.allInstances(Promotion.class);
@@ -35,8 +38,7 @@ public class PromotionRepository {
     }
 
     public Collection<Promotion> findByYearDigitSequence(final String yearDigitSequence) {
-        return YearSequenceFilter.filterByYearDigitSequence(
-                repositoryService, Promotion.FIND_BY_YEAR_QUERY,
-                Promotion.class, Promotion.YEAR, yearDigitSequence);
+        int minYearAfterPadding = YearSequenceFilter.pad(yearDigitSequence);
+        return isisJdoSupport.executeQuery(Promotion.class, QPromotion.candidate().year.gteq(minYearAfterPadding));
     }
 }

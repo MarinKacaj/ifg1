@@ -41,16 +41,16 @@ public class AcademicYear implements Comparable<AcademicYear> {
 
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Unique
-    private Integer startYear;
+    private int startYear;
 
     @Property(
             editing = Editing.ENABLED,
             publishing = Publishing.ENABLED)
-    public Integer getStartYear() {
+    public int getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Integer startYear) {
+    public void setStartYear(int startYear) {
         this.startYear = startYear;
     }
     //endregion
