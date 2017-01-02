@@ -69,7 +69,7 @@ public class Letter implements Comparable<Letter> {
         this.student = student;
     }
 
-    public Collection<Student> autoCompleteStudent(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public Collection<Student> autoCompleteStudent(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                    final String fullNameSequence) {
         return studentRepository.findByNameSequence(fullNameSequence);
     }

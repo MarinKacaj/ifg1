@@ -56,7 +56,7 @@ public class Exam implements Comparable<Exam> {
     }
 
     @Action
-    public java.util.Collection<AcademicYear> autoCompleteAcademicYear(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<AcademicYear> autoCompleteAcademicYear(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                                        final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }
@@ -107,7 +107,7 @@ public class Exam implements Comparable<Exam> {
     }
 
     @Action
-    public java.util.Collection<Student> autoCompleteStudent(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<Student> autoCompleteStudent(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                              final String studentNameSequence) {
         return studentRepository.findByNameSequence(studentNameSequence);
     }

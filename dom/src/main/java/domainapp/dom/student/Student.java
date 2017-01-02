@@ -129,7 +129,7 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<InitialFormation> autoCompleteInitialFormation(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<InitialFormation> autoCompleteInitialFormation(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                                                final String professionNameSequence) {
         return initialFormationRepository.findByName(professionNameSequence);
     }
@@ -295,7 +295,7 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<Promotion> autoCompletePromotion(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<Promotion> autoCompletePromotion(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                                  final String yearDigitSequence) {
         return promotionRepository.findByYearDigitSequence(yearDigitSequence);
     }
@@ -327,7 +327,7 @@ public class Student implements Comparable<Student> {
     }
 
     @Action
-    public java.util.Collection<AcademicYear> autoCompleteYear(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<AcademicYear> autoCompleteYear(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                                final String startYearDigitSequence) {
         return academicYearRepository.findByStartYearDigitSequence(startYearDigitSequence);
     }

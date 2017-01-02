@@ -79,7 +79,7 @@ public class Subject implements Comparable<Subject> {
     }
 
     @Action
-    public java.util.Collection<Module> autoCompleteModule(@MinLength(value = AutoCompleteConfig.MIN_LENGTH)
+    public java.util.Collection<Module> autoCompleteModule(@MinLength(AutoCompleteConfig.MIN_LENGTH)
                                                            final String nameSequence) {
         return moduleRepository.findByNameSequence(nameSequence);
     }
