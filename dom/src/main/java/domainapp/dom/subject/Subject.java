@@ -7,7 +7,10 @@ import domainapp.dom.module.ModuleRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Unique;
 
 /**
  * Created by C.R.C on 12/29/2016.
@@ -24,17 +27,9 @@ import javax.jdo.annotations.*;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = SubjectRepository.class,
         autoCompleteAction = "findByNameSequence")
-@Queries({
-        @Query(
-                name = Subject.FIND_BY_NAME_QUERY,
-                value = "SELECT FROM domainapp.dom.subject.Subject WHERE " +
-                        Subject.NAME + ".indexOf(:" + Subject.NAME + ") >= 0")
-})
 public class Subject implements Comparable<Subject> {
 
     public static final String ID = "id";
-
-    public static final String FIND_BY_NAME_QUERY = "findSubjectByName";
 
     //region name
     public static final String NAME = "name";

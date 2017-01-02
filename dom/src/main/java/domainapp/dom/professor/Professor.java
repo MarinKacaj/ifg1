@@ -6,7 +6,10 @@ import domainapp.dom.exam.Exam;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.Unique;
 
 /**
  * Created by C.R.C on 12/28/2016.
@@ -23,20 +26,12 @@ import javax.jdo.annotations.*;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = ProfessorRepository.class,
         autoCompleteAction = "findByNameSequence")
-@Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {"fullName", "affiliation"})
-@Queries({
-        @Query(
-                name = Professor.FIND_BY_FULL_NAME_OR_AFFILIATION_QUERY,
-                value = "SELECT FROM domainapp.dom.professor.Professor WHERE " +
-                        Professor.FULL_NAME + ".indexOf(:" + Professor.FULL_NAME + ") >= 0 || " +
-                        Professor.AFFILIATION + ".indexOf(:" + Professor.AFFILIATION + ") >= 0")
-})
+@Unique(name = Professor.FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME, members = {Professor.FULL_NAME, Professor.AFFILIATION})
 public class Professor implements Comparable<Professor> {
 
     public static final String ID = "id";
 
     public static final String FULL_NAME_AFFILIATION_UNIQUE_CONSTRAINT_NAME = "full_name_affiliation";
-    public static final String FIND_BY_FULL_NAME_OR_AFFILIATION_QUERY = "findProfessorByFullName";
 
     public static final String FULL_NAME_LABEL = "Full Name";
     public static final String AFFILIATION_LABEL = "Affiliation";

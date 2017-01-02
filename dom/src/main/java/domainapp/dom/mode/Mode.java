@@ -25,15 +25,9 @@ import java.util.Collection;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = ModeRepository.class,
         autoCompleteAction = "findByName")
-@javax.jdo.annotations.Queries({
-        @javax.jdo.annotations.Query(
-                name = Mode.FIND_BY_NAME,
-                value = "SELECT FROM domainapp.dom.mode.Mode WHERE " + Mode.NAME + ".indexOf(:" + Mode.NAME + ") >= 0")
-})
 public class Mode implements Comparable<Mode> {
 
     public static final String ID = "id";
-    public static final String FIND_BY_NAME = "findModeByName";
 
     //region name
     public static final String NAME = "name";

@@ -23,22 +23,11 @@ import javax.jdo.annotations.*;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = AcademicYearRepository.class,
         autoCompleteAction = "findByStartYearDigitSequence")
-@javax.jdo.annotations.Queries({
-        @javax.jdo.annotations.Query(
-                name = AcademicYear.FIND_BY_START_YEAR_QUERY,
-                value = "SELECT FROM domainapp.dom.academicyear.AcademicYear WHERE startYear >= :" + AcademicYear.START_YEAR)
-})
 public class AcademicYear implements Comparable<AcademicYear> {
 
     public static final String ID = "id";
 
-    //region named queries
-    public static final String FIND_BY_START_YEAR_QUERY = "findByStartYear";
-    //endregion
-
     //region startYear
-    public static final String START_YEAR = "startYear";
-
     @Column(allowsNull = ColumnAllowsNull.FALSE)
     @Unique
     private int startYear;
