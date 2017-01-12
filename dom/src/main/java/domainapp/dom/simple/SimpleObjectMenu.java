@@ -23,14 +23,14 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
 import java.util.Collection;
 
-@DomainService(
+/*@DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
         repositoryFor = SimpleObject.class
 )
 @DomainServiceLayout(
         named = "Simple Objects",
         menuOrder = "10"
-)
+)*/
 public class SimpleObjectMenu {
 
     @javax.inject.Inject
