@@ -15,7 +15,10 @@ import domainapp.dom.promotion.PromotionRepository;
 import org.apache.isis.applib.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 
 /**
  * Created by C.R.C on 12/25/2016.
@@ -32,15 +35,7 @@ import javax.jdo.annotations.*;
         auditing = Auditing.ENABLED,
         autoCompleteRepository = StudentRepository.class,
         autoCompleteAction = "findByNameSequence")
-@Queries({
-        @Query(
-                name = Student.FIND_BY_FULL_NAME_QUERY,
-                value = "SELECT FROM domainapp.dom.student.Student WHERE " +
-                        Student.FULL_NAME + ".indexOf(:" + Student.FULL_NAME + ") >= 0")
-})
 public class Student implements Comparable<Student> {
-
-    public static final String FIND_BY_FULL_NAME_QUERY = "findByFullName";
 
     //region > id
     public static final String ID = "id";
