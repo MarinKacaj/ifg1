@@ -1,5 +1,6 @@
 package domainapp.dom.student;
 
+import com.mysema.query.jdo.JDOQuery;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.mode.Mode;
@@ -29,6 +30,7 @@ public class StudentRepository {
     IsisJdoSupport isisJdoSupport;
 
     public Collection<Student> listAll() {
+        JDOQuery query = new JDOQuery(isisJdoSupport.getJdoPersistenceManager());
         return repositoryService.allInstances(Student.class);
     }
 
