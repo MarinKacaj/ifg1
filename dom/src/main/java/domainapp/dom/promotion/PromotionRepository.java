@@ -1,6 +1,6 @@
 package domainapp.dom.promotion;
 
-import domainapp.dom.YearSequenceFilter;
+import domainapp.dom.YearSequencePaddingUtil;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
@@ -38,7 +38,7 @@ public class PromotionRepository {
     }
 
     public Collection<Promotion> findByYearDigitSequence(final String yearDigitSequence) {
-        int minYearAfterPadding = YearSequenceFilter.pad(yearDigitSequence);
+        int minYearAfterPadding = YearSequencePaddingUtil.pad(yearDigitSequence);
         return isisJdoSupport.executeQuery(Promotion.class, QPromotion.candidate().year.gteq(minYearAfterPadding));
     }
 }

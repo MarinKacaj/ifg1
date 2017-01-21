@@ -1,6 +1,6 @@
 package domainapp.dom.academicyear;
 
-import domainapp.dom.YearSequenceFilter;
+import domainapp.dom.YearSequencePaddingUtil;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
@@ -39,7 +39,7 @@ public class AcademicYearRepository {
     }
 
     public Collection<AcademicYear> findByStartYearDigitSequence(final String startYearDigitSequence) {
-        int minYearAfterPadding = YearSequenceFilter.pad(startYearDigitSequence);
+        int minYearAfterPadding = YearSequencePaddingUtil.pad(startYearDigitSequence);
         return isisJdoSupport.executeQuery(AcademicYear.class, QAcademicYear.candidate().startYear.gteq(minYearAfterPadding));
     }
 }

@@ -6,7 +6,7 @@ import com.google.common.base.Strings;
  * Created by C.R.C on 12/31/2016.
  * Year padder util
  */
-public class YearSequenceFilter {
+public class YearSequencePaddingUtil {
 
     private static final int START_YEAR_MAX_NUM_DIGITS = 4;
     private static final char PAD_DIGIT = '0';
