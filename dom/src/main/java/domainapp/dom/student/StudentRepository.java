@@ -30,6 +30,8 @@ public class StudentRepository {
     IsisJdoSupport isisJdoSupport;
 
     public Collection<Student> listAll() {
+        // com.mysema.query.jdo.JDOQuery creation with DataNucleus JDO
+        // the var is not used, it's just for demo for the moment
         JDOQuery query = new JDOQuery(isisJdoSupport.getJdoPersistenceManager());
         return repositoryService.allInstances(Student.class);
     }
