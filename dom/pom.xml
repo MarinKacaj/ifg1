@@ -62,8 +62,8 @@
                             <processor>com.mysema.query.apt.jdo.JDOAnnotationProcessor</processor>
                             <showWarnings>true</showWarnings>
                             <options>
-                                <querydsl.suffix>D</querydsl.suffix>
                                 <querydsl.prefix>D</querydsl.prefix>
+                                <querydsl.suffix>D</querydsl.suffix>
                             </options>
                         </configuration>
                     </execution>
