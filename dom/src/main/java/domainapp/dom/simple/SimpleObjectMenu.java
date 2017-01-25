@@ -21,7 +21,7 @@ package domainapp.dom.simple;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
-import java.util.Collection;
+import java.util.List;
 
 /*@DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
@@ -39,14 +39,14 @@ public class SimpleObjectMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public Collection<SimpleObject> listAll() {
+    public List<SimpleObject> listAll() {
         return simpleObjectRepository.listAll();
     }
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
-    public Collection<SimpleObject> findByName(
+    public List<SimpleObject> findByName(
             @ParameterLayout(named = "Name")
             final String name
     ) {

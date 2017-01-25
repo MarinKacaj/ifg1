@@ -22,7 +22,7 @@ import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.simple.SimpleObjectMenu;
 import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -33,7 +33,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         try {
-            final List<SimpleObject> findAll = service(SimpleObjectMenu.class).listAll();
+            final Collection<SimpleObject> findAll = service(SimpleObjectMenu.class).listAll();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
 

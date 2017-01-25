@@ -1,6 +1,5 @@
 package domainapp.dom.student;
 
-import com.mysema.query.jdo.JDOQuery;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.mode.Mode;
@@ -30,9 +29,6 @@ public class StudentRepository {
     IsisJdoSupport isisJdoSupport;
 
     public Collection<Student> listAll() {
-        // com.mysema.query.jdo.JDOQuery creation with DataNucleus JDO
-        // the var is not used, it's just a demo for the moment
-        JDOQuery query = new JDOQuery(isisJdoSupport.getJdoPersistenceManager());
         return repositoryService.allInstances(Student.class);
     }
 

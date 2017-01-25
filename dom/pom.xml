@@ -47,13 +47,20 @@
         </resources>
 
         <plugins>
-            <!-- querydsl -->
+            <!-- buildplan-maven-plugin -->
+            <plugin>
+                <groupId>fr.jcgay.maven.plugins</groupId>
+                <artifactId>buildplan-maven-plugin</artifactId>
+                <version>1.2</version>
+            </plugin>
+            <!-- querydsl apt -->
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
                 <version>1.1.3</version>
                 <executions>
                     <execution>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>process</goal>
                         </goals>
@@ -62,6 +69,9 @@
                             <processor>com.mysema.query.apt.jdo.JDOAnnotationProcessor</processor>
                             <showWarnings>true</showWarnings>
                             <options>
+                                <querydsl.entityAccessors>true</querydsl.entityAccessors>
+                                <querydsl.listAccessors>true</querydsl.listAccessors>
+                                <querydsl.mapAccessors>true</querydsl.mapAccessors>
                                 <querydsl.prefix>D</querydsl.prefix>
                                 <querydsl.suffix>D</querydsl.suffix>
                             </options>
@@ -265,8 +275,5 @@
                 </plugins>
             </build>
         </profile>
-
-
     </profiles>
-
 </project>

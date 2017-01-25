@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,12 +59,12 @@ public class SimpleObjectMenu_IntegTest extends DomainAppIntegTest {
             transactionService.nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(menu).listAll();
+            final Collection<SimpleObject> all = wrap(menu).listAll();
 
             // then
             assertThat(all).hasSize(fs.getSimpleObjects().size());
 
-            SimpleObject simpleObject = wrap(all.get(0));
+            SimpleObject simpleObject = wrap(((List<SimpleObject>) all).get(0));
             assertThat(simpleObject.getName()).isEqualTo(fs.getSimpleObjects().get(0).getName());
         }
 
