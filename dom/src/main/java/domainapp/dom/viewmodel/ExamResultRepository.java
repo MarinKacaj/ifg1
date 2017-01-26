@@ -1,7 +1,9 @@
 package domainapp.dom.viewmodel;
 
 import com.mysema.query.Tuple;
-import com.mysema.query.jdo.JDOQuery;
+import com.mysema.query.jdo.sql.JDOSQLQuery;
+import com.mysema.query.sql.Configuration;
+import com.mysema.query.sql.HSQLDBTemplates;
 import domainapp.dom.academicyear.DAcademicYearD;
 import domainapp.dom.exam.DExamD;
 import domainapp.dom.module.DModuleD;
@@ -30,11 +32,28 @@ public class ExamResultRepository {
 
     public List<ExamResult> getExamResultsByAcademicYearAndEmploymentStatus(Integer academicYearStartYear,
                                                                             EmploymentStatus employmentStatus) {
-        JDOQuery query = new JDOQuery(isisJdoSupport.getJdoPersistenceManager());
-        List<Tuple> resultTuples = query.from(DSubjectD.subject, DModuleD.module, DExamD.exam, DProfessorD.professor,
-                DStudentD.student, DAcademicYearD.academicYear)
-                .where(DAcademicYearD.academicYear.startYear.eq(academicYearStartYear)
-                        .and(DStudentD.student.employmentStatus.eq(employmentStatus))).list();
+
+        Configuration configuration = new Configuration(new HSQLDBTemplates());
+        configuration.registerSchemaOverride("", "simple");
+        configuration.registerTableOverride("professor", "Professor");
+
+        JDOSQLQuery query = new JDOSQLQuery(isisJdoSupport.getJdoPersistenceManager(), configuration);
+        DProfessorD qdProfessor = DProfessorD.professor;
+        DAcademicYearD qdAcademicYear = DAcademicYearD.academicYear;
+        DExamD qdExam = DExamD.exam;
+        DSubjectD qdSubject = DSubjectD.subject;
+        DStudentD qdStudent = DStudentD.student;
+        DModuleD qdModule = DModuleD.module;
+
+        List<Tuple> resultTuples = query.from(qdProfessor).innerJoin(qdExam).on(qdProfessor.eq(qdExam.professor()))
+                .innerJoin(qdAcademicYear).on(qdAcademicYear.eq(qdExam.academicYear()))
+                .innerJoin(qdSubject).on(qdSubject.eq(qdExam.subject()))
+                .innerJoin(qdStudent).on(qdStudent.eq(qdExam.student()))
+                .innerJoin(qdModule).on(qdModule.eq(qdSubject.module()))
+                .innerJoin(qdAcademicYear).on(qdAcademicYear.eq(qdStudent.year()))
+                .where(qdAcademicYear.startYear.eq(academicYearStartYear)
+                        .and(qdStudent.employmentStatus.eq(employmentStatus)))
+                .list(qdSubject.name, qdModule.name, qdExam.mark, qdProfessor.fullName, qdStudent.fullName);
         List<ExamResult> examResults = new LinkedList<>();
         for (Tuple tuple : resultTuples) {
             String subjectName = tuple.get(DSubjectD.subject.name);

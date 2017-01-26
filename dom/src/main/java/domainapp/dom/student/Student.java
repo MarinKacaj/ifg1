@@ -25,6 +25,7 @@ import javax.jdo.annotations.Persistent;
  * Student
  */
 @javax.jdo.annotations.PersistenceCapable(
+        table = "STUDENT",
         identityType = IdentityType.DATASTORE,
         schema = "simple")
 @javax.jdo.annotations.DatastoreIdentity(
