@@ -1,10 +1,7 @@
 package domainapp.dom.viewmodel;
 
-import com.mysema.query.Tuple;
-import com.mysema.query.jdo.sql.JDOSQLQuery;
-import com.mysema.query.sql.Configuration;
-import com.mysema.query.sql.HSQLDBTemplates;
-import com.mysema.query.sql.SQLTemplates;
+import com.querydsl.core.Tuple;
+import com.querydsl.jdo.JDOQuery;
 import domainapp.dom.academicyear.DAcademicYearD;
 import domainapp.dom.exam.DExamD;
 import domainapp.dom.module.DModuleD;
@@ -34,37 +31,30 @@ public class ExamResultRepository {
     public List<ExamResult> getExamResultsByAcademicYearAndEmploymentStatus(Integer academicYearStartYear,
                                                                             EmploymentStatus employmentStatus) {
 
-        DProfessorD qdProfessor = new DProfessorD("Professor");
-        DAcademicYearD qdAcademicYear = new DAcademicYearD("AcademicYear");
-        DExamD qdExam = new DExamD("Exam");
-        DSubjectD qdSubject = new DSubjectD("Subject");
-        DStudentD qdStudent = new DStudentD("Student");
-        DModuleD qdModule = new DModuleD("Module");
+        DProfessorD qdProfessor = DProfessorD.professor;
+        DAcademicYearD qdAcademicYear = DAcademicYearD.academicYear;
+        DExamD qdExam = DExamD.exam;
+        DSubjectD qdSubject = DSubjectD.subject;
+        DStudentD qdStudent = DStudentD.student;
+        DModuleD qdModule = DModuleD.module;
 
-        SQLTemplates hsqlTemplates = HSQLDBTemplates.builder().printSchema().build();
-        Configuration configuration = new Configuration(hsqlTemplates);
-        configuration.registerSchemaOverride("public", "simple");
-        configuration.registerTableOverride("professor", "Professor");
-        configuration.registerTableOverride("academicYear", "AcademicYear");
-        configuration.registerTableOverride("exam", "Exam");
-        configuration.registerTableOverride("subject", "Subject");
-        configuration.registerTableOverride("student", "Student");
-        configuration.registerTableOverride("module", "Module");
-
-        JDOSQLQuery query = new JDOSQLQuery(isisJdoSupport.getJdoPersistenceManager(), configuration);
-
-        List<Tuple> resultTuples = query.from(qdProfessor).innerJoin(qdExam).on(qdProfessor.eq(qdExam.professor()))
-                .innerJoin(qdAcademicYear).on(qdAcademicYear.eq(qdExam.academicYear()))
-                .innerJoin(qdSubject).on(qdSubject.eq(qdExam.subject()))
-                .innerJoin(qdStudent).on(qdStudent.eq(qdExam.student()))
-                .innerJoin(qdModule).on(qdModule.eq(qdSubject.module()))
-                .innerJoin(qdAcademicYear).on(qdAcademicYear.eq(qdStudent.year()))
-                .where(qdAcademicYear.startYear.eq(academicYearStartYear)
-                        .and(qdStudent.employmentStatus.eq(employmentStatus)))
-                .list(qdSubject.name, qdModule.name, qdExam.mark, qdProfessor.fullName, qdStudent.fullName);
+        JDOQuery<ExamResult> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
+        List<Tuple> examResultTuples = query
+                .from(qdProfessor, qdAcademicYear, qdExam, qdSubject, qdStudent, qdModule)
+                .select(qdSubject.name, qdModule.name, qdExam.mark, qdProfessor.fullName, qdStudent.fullName)
+                .where(qdProfessor.eq(qdExam.professor())
+                        .and(qdAcademicYear.eq(qdExam.academicYear()))
+                        .and(qdSubject.eq(qdExam.subject()))
+                        .and(qdStudent.eq(qdExam.student()))
+                        .and(qdModule.eq(qdSubject.module()))
+                        .and(qdAcademicYear.eq(qdStudent.year()))
+                        .and(qdAcademicYear.startYear.eq(academicYearStartYear))
+                        .and(qdStudent.employmentStatus.eq(employmentStatus))
+                )
+                .fetch();
 
         List<ExamResult> examResults = new LinkedList<>();
-        for (Tuple tuple : resultTuples) {
+        for (Tuple tuple : examResultTuples) {
             String subjectName = tuple.get(DSubjectD.subject.name);
             String moduleName = tuple.get(DModuleD.module.name);
             Integer mark = tuple.get(DExamD.exam.mark);

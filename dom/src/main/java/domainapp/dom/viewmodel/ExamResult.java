@@ -1,6 +1,6 @@
 package domainapp.dom.viewmodel;
 
-import com.mysema.query.annotations.QueryProjection;
+import com.querydsl.core.annotations.QueryProjection;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
@@ -56,5 +56,10 @@ public class ExamResult {
 
     public String getStudentFullName() {
         return studentFullName;
+    }
+
+    @Override
+    public String toString() {
+        return studentFullName + "'s mark in " + subjectName + " by " + professorFullName + " is " + mark;
     }
 }
