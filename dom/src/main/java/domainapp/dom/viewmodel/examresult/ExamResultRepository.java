@@ -1,4 +1,4 @@
-package domainapp.dom.viewmodel;
+package domainapp.dom.viewmodel.examresult;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jdo.JDOQuery;
@@ -52,14 +52,15 @@ public class ExamResultRepository {
                         .and(qdStudent.employmentStatus.eq(employmentStatus))
                 )
                 .fetch();
+        query.close();
 
         List<ExamResult> examResults = new LinkedList<>();
         for (Tuple tuple : examResultTuples) {
-            String subjectName = tuple.get(DSubjectD.subject.name);
-            String moduleName = tuple.get(DModuleD.module.name);
-            Integer mark = tuple.get(DExamD.exam.mark);
-            String professorFullName = tuple.get(DProfessorD.professor.fullName);
-            String studentFullName = tuple.get(DStudentD.student.fullName);
+            String subjectName = tuple.get(qdSubject.name);
+            String moduleName = tuple.get(qdModule.name);
+            Integer mark = tuple.get(qdExam.mark);
+            String professorFullName = tuple.get(qdProfessor.fullName);
+            String studentFullName = tuple.get(qdStudent.fullName);
             ExamResult examResult = new ExamResult(subjectName, moduleName, mark, professorFullName, studentFullName);
             examResults.add(examResult);
         }

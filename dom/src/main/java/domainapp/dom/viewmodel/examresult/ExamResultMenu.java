@@ -1,4 +1,4 @@
-package domainapp.dom.viewmodel;
+package domainapp.dom.viewmodel.examresult;
 
 import domainapp.dom.student.EmploymentStatus;
 import org.apache.isis.applib.annotation.*;
@@ -27,8 +27,9 @@ public class ExamResultMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public Collection<ExamResult> listExamResultsByAcademicYearAndEmploymentStatus(Integer academicYearStartYear,
-                                                                                   EmploymentStatus employmentStatus) {
+    public Collection<ExamResult> listExamResultsByAcademicYearAndEmploymentStatus(@ParameterLayout(named = "Start Year")
+                                                                                   final Integer academicYearStartYear,
+                                                                                   final EmploymentStatus employmentStatus) {
         return examResultRepository
                 .getExamResultsByAcademicYearAndEmploymentStatus(academicYearStartYear, employmentStatus);
     }

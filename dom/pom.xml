@@ -97,7 +97,6 @@
 
     <properties>
         <querydsl.version>4.1.4</querydsl.version>
-        <querydsl.version.mysema>3.7.4</querydsl.version.mysema>
     </properties>
 
     <dependencies>

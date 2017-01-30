@@ -1,4 +1,4 @@
-package domainapp.dom.viewmodel;
+package domainapp.dom.viewmodel.academicyearexamresult;
 
 import com.querydsl.core.annotations.QueryProjection;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -6,19 +6,22 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.ViewModel;
 
-
+/**
+ * Created by C.R.C on 1/30/2017.
+ * Academic year exam result
+ */
 @ViewModel
 @DomainObject(editing = Editing.DISABLED)
-public class ExamResult {
+public class AcademicYearExamResult {
 
     @Property
-    private String subjectName;
-
-    @Property
-    private String moduleName;
+    private Integer academicYearStartYear;
 
     @Property
     private Integer mark;
+
+    @Property
+    private String subjectName;
 
     @Property
     private String professorFullName;
@@ -26,28 +29,32 @@ public class ExamResult {
     @Property
     private String studentFullName;
 
-    public ExamResult() {
+    @Property
+    private String moduleName;
+
+    public AcademicYearExamResult() {
     }
 
     @QueryProjection
-    public ExamResult(String subjectName, String moduleName, Integer mark, String professorFullName, String studentFullName) {
-        this.subjectName = subjectName;
-        this.moduleName = moduleName;
+    public AcademicYearExamResult(Integer academicYearStartYear, Integer mark, String subjectName, String professorFullName, String studentFullName, String moduleName) {
+        this.academicYearStartYear = academicYearStartYear;
         this.mark = mark;
+        this.subjectName = subjectName;
         this.professorFullName = professorFullName;
         this.studentFullName = studentFullName;
+        this.moduleName = moduleName;
     }
 
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public String getModuleName() {
-        return moduleName;
+    public Integer getAcademicYearStartYear() {
+        return academicYearStartYear;
     }
 
     public Integer getMark() {
         return mark;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
     }
 
     public String getProfessorFullName() {
@@ -56,6 +63,10 @@ public class ExamResult {
 
     public String getStudentFullName() {
         return studentFullName;
+    }
+
+    public String getModuleName() {
+        return moduleName;
     }
 
     @Override
