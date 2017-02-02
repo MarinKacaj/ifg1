@@ -49,6 +49,7 @@ public class AcademicYearExamResultRepository {
                         .and(qdAcademicYear.startYear.eq(academicYearStartYear))
                 )
                 .fetch();
+        query.close();
 
         List<AcademicYearExamResult> academicYearExamResults = new LinkedList<>();
         for (Tuple academicYearExamResultPartial : academicYearExamResultPartials) {

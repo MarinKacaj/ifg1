@@ -6,6 +6,7 @@ import domainapp.dom.mode.Mode;
 import domainapp.dom.promotion.Promotion;
 import org.apache.isis.applib.annotation.*;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 
@@ -44,8 +45,14 @@ public class StudentMenu {
         return studentrepository.findByNameSequence(fullName);
     }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
     @MemberOrder(sequence = "3")
+    public Collection<Student> findUnPromoted() {
+        return studentrepository.findUnPromoted();
+    }
+
+    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "4")
     public Student create(
             @ParameterLayout(named = Student.FULL_NAME_LABEL) final String fullName,
             @ParameterLayout(named = Student.GENDER_LABEL) final Gender gender,
@@ -57,7 +64,7 @@ public class StudentMenu {
             @ParameterLayout(named = Student.EMAIL_LABEL) final String email,
             @ParameterLayout(named = Student.EMPLOYER_LABEL) final String employer,
             @ParameterLayout(named = Student.EMPLOYMENT_STATUS_LABEL) final EmploymentStatus employmentStatus,
-            @ParameterLayout(named = Student.PROMOTION_LABEL) final Promotion promotion,
+            @ParameterLayout(named = Student.PROMOTION_LABEL) @Nullable final Promotion promotion,
             @ParameterLayout(named = Student.INITIAL_FORMATION_LABEL) final InitialFormation initialFormation,
             @ParameterLayout(named = Student.ACADEMIC_YEAR_LABEL) final AcademicYear year,
             @ParameterLayout(named = Student.MODE_LABEL) final Mode mode) {
