@@ -75,6 +75,26 @@ public class StudentRepository {
         return students;
     }
 
+    public Collection<Student> findEmployedSortedByPromotionAscending() {
+        DStudentD qdStudent = DStudentD.student;
+        JDOQuery<Student> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
+
+        List<Tuple> unPromotedStudents = query
+                .from(qdStudent)
+                .select(StudentQUtil.createStudentFullProjection())
+                .where(qdStudent.employmentStatus.eq(EmploymentStatus.EMPLOYED))
+                .orderBy(qdStudent.promotion.year.asc())
+                .fetch();
+        query.close();
+
+        List<Student> students = new LinkedList<>();
+        for (Tuple unPromotedStudent : unPromotedStudents) {
+            students.add(StudentQUtil.convertToTupleDomainObject(unPromotedStudent));
+        }
+
+        return students;
+    }
+
     public Collection<Student> findByNameSequence(final String fullNameSequence) {
         return isisJdoSupport.executeQuery(Student.class, QStudent.candidate().fullName.indexOf(fullNameSequence).gteq(0));
     }
