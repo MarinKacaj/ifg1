@@ -30,6 +30,18 @@ public class YearlyStudentInscriptionMenu {
     @MemberOrder(sequence = "8")
     public Collection<YearlyStudentInscription> listYearlyStudentInscriptions(@ParameterLayout(named = "Academic Year")
                                                                               final AcademicYear academicYear) {
-        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear);
+        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, true);
+    }
+
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "9")
+    public Collection<YearlyStudentInscription> listYearlyEmplpoyedStudentInscriptions(@ParameterLayout(named = "Academic Year")
+                                                                                       final AcademicYear academicYear) {
+        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, false);
     }
 }

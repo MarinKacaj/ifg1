@@ -1,6 +1,7 @@
 package domainapp.dom.viewmodel.yearlystudentinscription;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jdo.JDOQuery;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.DAcademicYearD;
@@ -29,23 +30,29 @@ public class YearlyStudentInscriptionRepository {
     @javax.inject.Inject
     IsisJdoSupport isisJdoSupport;
 
-    public Collection<YearlyStudentInscription> getYearlyStudentInscriptions(final AcademicYear academicYear) {
+    public Collection<YearlyStudentInscription> getYearlyStudentInscriptions(final AcademicYear academicYear,
+                                                                             final boolean ignoreEmploymentStatus) {
 
         DStudentD qdStudent = DStudentD.student;
         DInitialFormationD qdInitialFormation = DInitialFormationD.initialFormation;
         DPromotionD qdPromotion = DPromotionD.promotion;
         DAcademicYearD qdAcademicYear = DAcademicYearD.academicYear;
 
+        BooleanExpression projection = qdInitialFormation.eq(qdStudent.initialFormation())
+                .and(qdPromotion.eq(qdStudent.promotion()))
+                .and(qdAcademicYear.eq(qdStudent.year()))
+                .and(qdAcademicYear.startYear.eq(academicYear.getStartYear()));
+        if (!ignoreEmploymentStatus) {
+            projection.and(qdStudent.employmentStatus.eq(EmploymentStatus.EMPLOYED));
+        }
+
         JDOQuery<StudentInscription> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
         List<Tuple> studentInscriptionProjectedRecords = query
                 .from(qdStudent, qdInitialFormation, qdPromotion, qdAcademicYear)
                 .select(qdStudent.fullName, qdStudent.birthYear, qdStudent.city, qdStudent.country,
-                        qdStudent.employmentStatus, qdStudent.email, qdInitialFormation.name, qdPromotion.year,
-                        qdAcademicYear.startYear)
-                .where(qdInitialFormation.eq(qdStudent.initialFormation())
-                        .and(qdPromotion.eq(qdStudent.promotion()))
-                        .and(qdAcademicYear.eq(qdStudent.year()))
-                        .and(qdAcademicYear.startYear.eq(academicYear.getStartYear())))
+                        qdStudent.employmentStatus, qdStudent.employer, qdStudent.email, qdInitialFormation.name,
+                        qdPromotion.year, qdAcademicYear.startYear)
+                .where(projection)
                 .orderBy(qdStudent.fullName.asc())
                 .fetch();
         query.close();
@@ -57,10 +64,11 @@ public class YearlyStudentInscriptionRepository {
             String studentCity = studentInscriptionProjectedRecord.get(qdStudent.city);
             String studentCountry = studentInscriptionProjectedRecord.get(qdStudent.country);
             EmploymentStatus studentEmploymentStatus = studentInscriptionProjectedRecord.get(qdStudent.employmentStatus);
+            String studentEmployer = studentInscriptionProjectedRecord.get(qdStudent.employer);
             String initialFormationName = studentInscriptionProjectedRecord.get(qdInitialFormation.name);
             Integer promotionYear = studentInscriptionProjectedRecord.get(qdPromotion.year);
             YearlyStudentInscription studentInscription = new YearlyStudentInscription(studentFullName, studentBirthYear,
-                    studentCity, studentCountry, studentEmploymentStatus, initialFormationName, promotionYear);
+                    studentCity, studentCountry, studentEmploymentStatus, studentEmployer, initialFormationName, promotionYear);
             yearlyStudentInscriptions.add(studentInscription);
         }
 

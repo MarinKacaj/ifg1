@@ -30,6 +30,9 @@ public class YearlyStudentInscription {
     private EmploymentStatus studentEmploymentStatus;
 
     @Property
+    private String studentEmployer;
+
+    @Property
     private String initialFormationName;
 
     @Property
@@ -40,12 +43,13 @@ public class YearlyStudentInscription {
 
     public YearlyStudentInscription(String studentFullName, Integer studentBirthYear, String studentCity,
                                     String studentCountry, EmploymentStatus studentEmploymentStatus,
-                                    String initialFormationName, Integer promotionYear) {
+                                    String studentEmployer, String initialFormationName, Integer promotionYear) {
         this.studentFullName = studentFullName;
         this.studentBirthYear = studentBirthYear;
         this.studentCity = studentCity;
         this.studentCountry = studentCountry;
         this.studentEmploymentStatus = studentEmploymentStatus;
+        this.studentEmployer = studentEmployer;
         this.initialFormationName = initialFormationName;
         this.promotionYear = promotionYear;
     }
