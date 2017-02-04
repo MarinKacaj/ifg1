@@ -43,31 +43,33 @@ public class StudentRepository {
 
         List<Tuple> unPromotedStudents = query
                 .from(qdStudent)
-                .select(qdStudent.fullName, qdStudent.gender, qdStudent.birthYear, qdStudent.initialFormation,
-                        qdStudent.address, qdStudent.city, qdStudent.country, qdStudent.tel, qdStudent.email,
-                        qdStudent.employer, qdStudent.employmentStatus, qdStudent.promotion, qdStudent.year,
-                        qdStudent.mode)
+                .select(StudentQUtil.createStudentFullProjection())
                 .where(qdStudent.promotion.isNull())
                 .fetch();
         query.close();
 
         List<Student> students = new LinkedList<>();
         for (Tuple unPromotedStudent : unPromotedStudents) {
-            Student student = new Student();
-            student.setFullName(unPromotedStudent.get(qdStudent.fullName));
-            student.setGender(unPromotedStudent.get(qdStudent.gender));
-            student.setBirthYear(unPromotedStudent.get(qdStudent.birthYear));
-            student.setInitialFormation(unPromotedStudent.get(qdStudent.initialFormation));
-            student.setAddress(unPromotedStudent.get(qdStudent.address));
-            student.setCity(unPromotedStudent.get(qdStudent.city));
-            student.setCountry(unPromotedStudent.get(qdStudent.country));
-            student.setTel(unPromotedStudent.get(qdStudent.tel));
-            student.setEmail(unPromotedStudent.get(qdStudent.email));
-            student.setEmploymentStatus(unPromotedStudent.get(qdStudent.employmentStatus));
-            student.setPromotion(unPromotedStudent.get(qdStudent.promotion));
-            student.setYear(unPromotedStudent.get(qdStudent.year));
-            student.setMode(unPromotedStudent.get(qdStudent.mode));
-            students.add(student);
+            students.add(StudentQUtil.convertToTupleDomainObject(unPromotedStudent));
+        }
+
+        return students;
+    }
+
+    public Collection<Student> findUnEmployed() {
+        DStudentD qdStudent = DStudentD.student;
+        JDOQuery<Student> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
+
+        List<Tuple> unPromotedStudents = query
+                .from(qdStudent)
+                .select(StudentQUtil.createStudentFullProjection())
+                .where(qdStudent.employmentStatus.eq(EmploymentStatus.UNEMPLOYED))
+                .fetch();
+        query.close();
+
+        List<Student> students = new LinkedList<>();
+        for (Tuple unPromotedStudent : unPromotedStudents) {
+            students.add(StudentQUtil.convertToTupleDomainObject(unPromotedStudent));
         }
 
         return students;

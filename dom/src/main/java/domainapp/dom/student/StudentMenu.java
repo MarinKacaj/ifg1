@@ -51,8 +51,14 @@ public class StudentMenu {
         return studentrepository.findUnPromoted();
     }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
     @MemberOrder(sequence = "4")
+    public Collection<Student> findUnEmployed() {
+        return studentrepository.findUnEmployed();
+    }
+
+    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "5")
     public Student create(
             @ParameterLayout(named = Student.FULL_NAME_LABEL) final String fullName,
             @ParameterLayout(named = Student.GENDER_LABEL) final Gender gender,
