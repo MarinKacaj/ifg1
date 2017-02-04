@@ -1,5 +1,6 @@
 package domainapp.dom.viewmodel.examresult;
 
+import domainapp.dom.NamedMenu;
 import domainapp.dom.student.EmploymentStatus;
 import org.apache.isis.applib.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.Collection;
         nature = NatureOfService.VIEW_MENU_ONLY
 )
 @DomainServiceLayout(
-        named = "Exam Result",
+        named = NamedMenu.EXAM_MENU_NAME,
         menuOrder = "10")
 public class ExamResultMenu {
 

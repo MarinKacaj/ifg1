@@ -1,5 +1,6 @@
 package domainapp.dom.student;
 
+import domainapp.dom.NamedMenu;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.mode.Mode;
@@ -14,7 +15,7 @@ import java.util.Collection;
         nature = NatureOfService.VIEW_MENU_ONLY
 )
 @DomainServiceLayout(
-        named = "Student",
+        named = NamedMenu.STUDENT_MENU_NAME,
         menuOrder = "10"
 )
 public class StudentMenu {

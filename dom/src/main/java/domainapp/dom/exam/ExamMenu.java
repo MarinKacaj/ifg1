@@ -1,5 +1,6 @@
 package domainapp.dom.exam;
 
+import domainapp.dom.NamedMenu;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.professor.Professor;
 import domainapp.dom.simple.SimpleObjectMenu;
@@ -19,7 +20,7 @@ import java.util.Collection;
         repositoryFor = Exam.class
 )
 @DomainServiceLayout(
-        named = "Exams",
+        named = NamedMenu.EXAM_MENU_NAME,
         menuOrder = "10"
 )
 public class ExamMenu {

@@ -1,5 +1,6 @@
 package domainapp.dom.viewmodel.studentinscription;
 
+import domainapp.dom.NamedMenu;
 import org.apache.isis.applib.annotation.*;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Collection;
         nature = NatureOfService.VIEW_MENU_ONLY
 )
 @DomainServiceLayout(
-        named = "Exam Result",
+        named = NamedMenu.STUDENT_MENU_NAME,
         menuOrder = "10")
 public class StudentInscriptionMenu {
 
@@ -25,7 +26,7 @@ public class StudentInscriptionMenu {
     @ActionLayout(
             bookmarking = BookmarkPolicy.AS_ROOT
     )
-    @MemberOrder(sequence = "1")
+    @MemberOrder(sequence = "7")
     public Collection<StudentInscription> listStudentInscriptions() {
         return studentInscriptionRepository.getStudentInscriptions();
     }
