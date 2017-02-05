@@ -16,10 +16,10 @@ import java.util.Collection;
 @DomainServiceLayout(
         named = NamedMenu.EXAM_MENU_NAME,
         menuOrder = "10")
-public class StudentFinalMarkMenu {
+public class StudentResultCollectionMenu {
 
     @javax.inject.Inject
-    StudentFinalMarkRepository studentFinalMarkRepository;
+    StudentResultCollectionRepository studentResultCollectionRepository;
 
     @Action(
             semantics = SemanticsOf.SAFE
@@ -28,7 +28,7 @@ public class StudentFinalMarkMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public Collection<StudentFinalMark> findFinalMarksByStudent(@ParameterLayout(named = "Student") final Student student) {
-        return studentFinalMarkRepository.getStudentFinalMarks(student);
+    public Collection<StudentResultCollection> findFinalMarksByStudent(@ParameterLayout(named = "Student") final Student student) {
+        return studentResultCollectionRepository.getStudentFinalMarks(student);
     }
 }
