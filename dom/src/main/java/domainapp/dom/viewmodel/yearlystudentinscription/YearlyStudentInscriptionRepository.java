@@ -8,6 +8,7 @@ import domainapp.dom.academicyear.DAcademicYearD;
 import domainapp.dom.initialformation.DInitialFormationD;
 import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.promotion.DPromotionD;
+import domainapp.dom.promotion.Promotion;
 import domainapp.dom.student.DStudentD;
 import domainapp.dom.student.EmploymentStatus;
 import domainapp.dom.viewmodel.studentinscription.StudentInscription;
@@ -35,7 +36,9 @@ public class YearlyStudentInscriptionRepository {
     public Collection<YearlyStudentInscription> getYearlyStudentInscriptions(final AcademicYear academicYear,
                                                                              final Boolean ignoreEmploymentStatus,
                                                                              @Nullable
-                                                                             final InitialFormation initialFormation) {
+                                                                             final InitialFormation initialFormation,
+                                                                             @Nullable
+                                                                             final Promotion promotion) {
 
         DStudentD qdStudent = DStudentD.student;
         DInitialFormationD qdInitialFormation = DInitialFormationD.initialFormation;
@@ -51,6 +54,9 @@ public class YearlyStudentInscriptionRepository {
         }
         if (initialFormation != null) {
             projection.and(qdStudent.initialFormation().eq(initialFormation));
+        }
+        if (promotion != null) {
+            projection.and(qdStudent.promotion().eq(promotion));
         }
 
         JDOQuery<StudentInscription> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());

@@ -3,6 +3,7 @@ package domainapp.dom.viewmodel.yearlystudentinscription;
 import domainapp.dom.NamedMenu;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.promotion.Promotion;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
@@ -37,7 +38,11 @@ public class YearlyStudentInscriptionMenu {
                                                                               final Boolean ignoreEmploymentStatus,
                                                                               @ParameterLayout(named = Student.INITIAL_FORMATION_LABEL)
                                                                               @Nullable
-                                                                              final InitialFormation initialFormation) {
-        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, ignoreEmploymentStatus, initialFormation);
+                                                                                  final InitialFormation initialFormation,
+                                                                              @ParameterLayout(named = Student.PROMOTION_LABEL)
+                                                                                  @Nullable
+                                                                                  final Promotion promotion) {
+        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, ignoreEmploymentStatus,
+                initialFormation, promotion);
     }
 }
