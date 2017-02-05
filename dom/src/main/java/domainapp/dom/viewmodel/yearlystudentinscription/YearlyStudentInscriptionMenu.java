@@ -2,8 +2,11 @@ package domainapp.dom.viewmodel.yearlystudentinscription;
 
 import domainapp.dom.NamedMenu;
 import domainapp.dom.academicyear.AcademicYear;
+import domainapp.dom.initialformation.InitialFormation;
+import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
@@ -28,20 +31,13 @@ public class YearlyStudentInscriptionMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "8")
-    public Collection<YearlyStudentInscription> listYearlyStudentInscriptions(@ParameterLayout(named = "Academic Year")
-                                                                              final AcademicYear academicYear) {
-        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, true);
-    }
-
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
-    @MemberOrder(sequence = "9")
-    public Collection<YearlyStudentInscription> listYearlyEmplpoyedStudentInscriptions(@ParameterLayout(named = "Academic Year")
-                                                                                       final AcademicYear academicYear) {
-        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, false);
+    public Collection<YearlyStudentInscription> listYearlyStudentInscriptions(@ParameterLayout(named = Student.ACADEMIC_YEAR_LABEL)
+                                                                              final AcademicYear academicYear,
+                                                                              @ParameterLayout(named = "Ignore Employment Status")
+                                                                              final Boolean ignoreEmploymentStatus,
+                                                                              @ParameterLayout(named = Student.INITIAL_FORMATION_LABEL)
+                                                                              @Nullable
+                                                                              final InitialFormation initialFormation) {
+        return yearlyStudentInscriptionRepository.getYearlyStudentInscriptions(academicYear, ignoreEmploymentStatus, initialFormation);
     }
 }

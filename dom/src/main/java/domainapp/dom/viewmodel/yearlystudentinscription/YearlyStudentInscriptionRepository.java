@@ -6,6 +6,7 @@ import com.querydsl.jdo.JDOQuery;
 import domainapp.dom.academicyear.AcademicYear;
 import domainapp.dom.academicyear.DAcademicYearD;
 import domainapp.dom.initialformation.DInitialFormationD;
+import domainapp.dom.initialformation.InitialFormation;
 import domainapp.dom.promotion.DPromotionD;
 import domainapp.dom.student.DStudentD;
 import domainapp.dom.student.EmploymentStatus;
@@ -14,6 +15,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +33,9 @@ public class YearlyStudentInscriptionRepository {
     IsisJdoSupport isisJdoSupport;
 
     public Collection<YearlyStudentInscription> getYearlyStudentInscriptions(final AcademicYear academicYear,
-                                                                             final boolean ignoreEmploymentStatus) {
+                                                                             final Boolean ignoreEmploymentStatus,
+                                                                             @Nullable
+                                                                             final InitialFormation initialFormation) {
 
         DStudentD qdStudent = DStudentD.student;
         DInitialFormationD qdInitialFormation = DInitialFormationD.initialFormation;
@@ -44,6 +48,9 @@ public class YearlyStudentInscriptionRepository {
                 .and(qdAcademicYear.startYear.eq(academicYear.getStartYear()));
         if (!ignoreEmploymentStatus) {
             projection.and(qdStudent.employmentStatus.eq(EmploymentStatus.EMPLOYED));
+        }
+        if (initialFormation != null) {
+            projection.and(qdStudent.initialFormation().eq(initialFormation));
         }
 
         JDOQuery<StudentInscription> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
