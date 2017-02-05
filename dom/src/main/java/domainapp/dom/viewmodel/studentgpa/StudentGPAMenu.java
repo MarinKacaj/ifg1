@@ -1,14 +1,12 @@
-package domainapp.dom.viewmodel.studentfinalmark;
+package domainapp.dom.viewmodel.studentgpa;
 
 import domainapp.dom.NamedMenu;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
-import java.util.Collection;
-
 /**
  * Created by C.R.C on 2/5/2017.
- * Student final mark menu
+ * Student GPA menu
  */
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -16,10 +14,10 @@ import java.util.Collection;
 @DomainServiceLayout(
         named = NamedMenu.STUDENT_MENU_NAME,
         menuOrder = "10")
-public class StudentResultCollectionMenu {
+public class StudentGPAMenu {
 
     @javax.inject.Inject
-    StudentResultCollectionRepository studentResultCollectionRepository;
+    StudentGPARepository studentGPARepository;
 
     @Action(
             semantics = SemanticsOf.SAFE
@@ -28,7 +26,8 @@ public class StudentResultCollectionMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public Collection<StudentResultCollection> findFinalMarksByStudent(@ParameterLayout(named = "Student") final Student student) {
-        return studentResultCollectionRepository.getStudentFinalMarks(student);
+    public StudentGPA findStudentGPAByStudent(@ParameterLayout(named = "Student")
+                                              final Student student) {
+        return studentGPARepository.getStudentGPA(student);
     }
 }
