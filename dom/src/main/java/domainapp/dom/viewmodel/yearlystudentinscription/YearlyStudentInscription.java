@@ -56,6 +56,6 @@ public class YearlyStudentInscription {
 
     @Override
     public String toString() {
-        return studentFullName;
+        return studentFullName + " " + promotionYear;
     }
 }

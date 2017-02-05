@@ -57,4 +57,45 @@ public class StudentInscription {
         this.promotionYear = promotionYear;
         this.academicYearStartYear = academicYearStartYear;
     }
+
+    public String getStudentFullName() {
+        return studentFullName;
+    }
+
+    public Integer getStudentBirthYear() {
+        return studentBirthYear;
+    }
+
+    public String getStudentCity() {
+        return studentCity;
+    }
+
+    public String getStudentCountry() {
+        return studentCountry;
+    }
+
+    public EmploymentStatus getStudentEmploymentStatus() {
+        return studentEmploymentStatus;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getInitialFormationName() {
+        return initialFormationName;
+    }
+
+    public Integer getPromotionYear() {
+        return promotionYear;
+    }
+
+    public Integer getAcademicYearStartYear() {
+        return academicYearStartYear;
+    }
+
+    @Override
+    public String toString() {
+        return studentFullName + " " + academicYearStartYear;
+    }
 }

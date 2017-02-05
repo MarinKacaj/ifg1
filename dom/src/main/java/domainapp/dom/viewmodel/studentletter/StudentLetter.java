@@ -41,6 +41,26 @@ public class StudentLetter {
         this.letterContent = letterContent;
     }
 
+    public String getStudentFullName() {
+        return studentFullName;
+    }
+
+    public String getStudentAddress() {
+        return studentAddress;
+    }
+
+    public String getStudentTel() {
+        return studentTel;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public String getLetterContent() {
+        return letterContent;
+    }
+
     @Override
     public String toString() {
         return "To " + studentFullName + ", " + studentAddress;

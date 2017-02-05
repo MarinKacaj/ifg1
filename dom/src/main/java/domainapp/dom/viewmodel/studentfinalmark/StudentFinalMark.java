@@ -85,4 +85,9 @@ public class StudentFinalMark {
     public Float getModuleGPA() {
         return moduleGPA;
     }
+
+    @Override
+    public String toString() {
+        return studentFullName + " @" + subjectName + ": " + examMark;
+    }
 }
