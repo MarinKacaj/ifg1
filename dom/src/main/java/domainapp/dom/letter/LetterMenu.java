@@ -1,5 +1,6 @@
 package domainapp.dom.letter;
 
+import domainapp.dom.NamedMenu;
 import domainapp.dom.student.Student;
 import org.apache.isis.applib.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.Collection;
         nature = NatureOfService.VIEW_MENU_ONLY,
         repositoryFor = Letter.class)
 @DomainServiceLayout(
-        named = "Letter",
+        named = NamedMenu.LETTER_MENU_NAME,
         menuOrder = "10")
 public class LetterMenu {
 

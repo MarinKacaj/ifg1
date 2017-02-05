@@ -8,4 +8,5 @@ public class NamedMenu {
 
     public static final String STUDENT_MENU_NAME = "Student";
     public static final String EXAM_MENU_NAME = "Exam";
+    public static final String LETTER_MENU_NAME = "Letter";
 }
