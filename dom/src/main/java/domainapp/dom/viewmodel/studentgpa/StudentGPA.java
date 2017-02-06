@@ -24,9 +24,9 @@ public class StudentGPA {
     }
 
     @QueryProjection
-    public StudentGPA(String studentFullName, Double gpa) {
+    public StudentGPA(String studentFullName, Float gpa) {
         this.studentFullName = studentFullName;
-        this.gpa = gpa.floatValue();
+        this.gpa = gpa;
     }
 
     public String getStudentFullName() {

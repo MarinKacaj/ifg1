@@ -28,7 +28,7 @@ public class StudentResultCollectionMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public Collection<StudentResultCollection> findFinalMarksByStudent(@ParameterLayout(named = "Student") final Student student) {
+    public Collection<StudentResult> findFinalMarksByStudent(@ParameterLayout(named = "Student") final Student student) {
         return studentResultCollectionRepository.getStudentFinalMarks(student);
     }
 }

@@ -12,7 +12,7 @@ import org.apache.isis.applib.annotation.ViewModel;
  */
 @ViewModel
 @DomainObject(editing = Editing.DISABLED)
-public class StudentResultCollection {
+public class StudentResult {
 
     @Property
     private String studentFullName;
@@ -38,12 +38,12 @@ public class StudentResultCollection {
     @Property
     private Float moduleGPA;
 
-    public StudentResultCollection() {
+    public StudentResult() {
     }
 
     @QueryProjection
-    public StudentResultCollection(String studentFullName, String subjectName, Integer examMark, String professorFullName,
-                                   Integer academicYearStartYear, Float moduleCoefficient, String moduleName, Float moduleGPA) {
+    public StudentResult(String studentFullName, String subjectName, Integer examMark, String professorFullName,
+                         Integer academicYearStartYear, Float moduleCoefficient, String moduleName, Float moduleGPA) {
         this.studentFullName = studentFullName;
         this.subjectName = subjectName;
         this.examMark = examMark;

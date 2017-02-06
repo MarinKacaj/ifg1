@@ -22,13 +22,13 @@ import java.util.List;
  */
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = StudentResultCollection.class)
+        repositoryFor = StudentResult.class)
 public class StudentResultCollectionRepository {
 
     @javax.inject.Inject
     IsisJdoSupport isisJdoSupport;
 
-    public Collection<StudentResultCollection> getStudentFinalMarks(final Student student) {
+    public Collection<StudentResult> getStudentFinalMarks(final Student student) {
 
         DProfessorD qdProfessor = DProfessorD.professor;
         DAcademicYearD qdAcademicYear = DAcademicYearD.academicYear;
@@ -37,10 +37,10 @@ public class StudentResultCollectionRepository {
         DStudentD qdStudent = DStudentD.student;
         DModuleD qdModule = DModuleD.module;
 
-        JDOQuery<StudentResultCollection> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
-        List<StudentResultCollection> studentResultCollections = query
+        JDOQuery<StudentResult> query = new JDOQuery<>(isisJdoSupport.getJdoPersistenceManager());
+        List<StudentResult> studentResults = query
                 .from(qdProfessor, qdAcademicYear, qdExam, qdSubject, qdStudent, qdModule)
-                .select(Projections.constructor(StudentResultCollection.class,
+                .select(Projections.constructor(StudentResult.class,
                         qdStudent.fullName, qdSubject.name, qdExam.mark, qdProfessor.fullName,
                         qdAcademicYear.startYear, qdModule.coefficient, qdModule.name,
                         qdModule.coefficient.multiply(qdExam.mark)))
@@ -54,6 +54,6 @@ public class StudentResultCollectionRepository {
                         qdModule.coefficient, qdModule.name, qdModule.coefficient.multiply(qdExam.mark))
                 .fetch();
         query.close();
-        return studentResultCollections;
+        return studentResults;
     }
 }
